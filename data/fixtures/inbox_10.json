@@ -1,0 +1,92 @@
+[
+  {
+    "message_id": "inbox_fixture_01",
+    "thread_id": "thread_in_01",
+    "sender_name": "Maya",
+    "sender_email": "contact1@example.org",
+    "subject": "Course project submission",
+    "body": "Professor, I have completed the course project and uploaded the assignment. Could you confirm receipt?",
+    "expected_category": "Academic"
+  },
+  {
+    "message_id": "inbox_fixture_02",
+    "thread_id": "thread_in_02",
+    "sender_name": "Jordan",
+    "sender_email": "contact2@example.org",
+    "subject": "Interview availability",
+    "body": "Thank you for the interview invitation for the software engineer position. I am available to discuss next steps.",
+    "expected_category": "Career"
+  },
+  {
+    "message_id": "inbox_fixture_03",
+    "thread_id": "thread_in_03",
+    "sender_name": "Sam",
+    "sender_email": "contact3@example.org",
+    "subject": "Dinner plans",
+    "body": "Hi Maya, are we still meeting for dinner this weekend? Let me know what works.",
+    "expected_category": "Personal"
+  },
+  {
+    "message_id": "inbox_fixture_04",
+    "thread_id": "thread_in_04",
+    "sender_name": "Professor Lee",
+    "sender_email": "lee@example.edu",
+    "subject": "Revised assignment submission",
+    "body": "I uploaded the revised assignment after incorporating the lecture feedback. Could you confirm the file opens correctly?",
+    "expected_category": "Academic"
+  },
+  {
+    "message_id": "inbox_fixture_05",
+    "thread_id": "thread_in_05",
+    "sender_name": "Maya",
+    "sender_email": "contact5@example.org",
+    "subject": "Research paper feedback",
+    "body": "I revised the research paper based on your comments and would appreciate feedback before the lecture.",
+    "expected_category": "Academic"
+  },
+  {
+    "message_id": "inbox_fixture_06",
+    "thread_id": "thread_in_06",
+    "sender_name": "Jordan",
+    "sender_email": "contact6@example.org",
+    "subject": "Recruiting follow-up",
+    "body": "Following up on my job application. Please let me know whether the hiring team needs my resume.",
+    "expected_category": "Career"
+  },
+  {
+    "message_id": "inbox_fixture_07",
+    "thread_id": "thread_in_07",
+    "sender_name": "Sam",
+    "sender_email": "contact7@example.org",
+    "subject": "Family visit",
+    "body": "We are planning a family visit next month. Would Saturday work for you?",
+    "expected_category": "Personal"
+  },
+  {
+    "message_id": "inbox_fixture_08",
+    "thread_id": "thread_in_08",
+    "sender_name": "Asha",
+    "sender_email": "asha@example.org",
+    "subject": "Checking in about the interview",
+    "body": "Thanks again for speaking with me about the software engineer role. Please let me know if you need any further information from my application.",
+    "expected_category": "Career"
+  },
+  {
+    "message_id": "inbox_fixture_09",
+    "thread_id": "thread_in_09",
+    "sender_name": "Maya",
+    "sender_email": "contact9@example.org",
+    "subject": "Thesis meeting",
+    "body": "Could we schedule a meeting to discuss my thesis and university research?",
+    "expected_category": "Academic"
+  },
+  {
+    "message_id": "inbox_fixture_10",
+    "thread_id": "thread_in_10",
+    "sender_name": "Jordan",
+    "sender_email": "contact10@example.org",
+    "subject": "Position update",
+    "body": "The recruiting team reviewed your application for the position and would like to arrange an interview.",
+    "expected_category": "Career"
+  }
+]

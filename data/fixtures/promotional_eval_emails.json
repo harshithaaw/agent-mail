@@ -1,0 +1,74 @@
+[
+  {
+    "message_id": "promo_eval_01",
+    "thread_id": "promo_eval_thread_01",
+    "sender_email": "offers@willowandpine.example",
+    "timestamp": "2026-08-01T09:00:00Z",
+    "subject": "Exclusive summer sale",
+    "body": "Dear valued customer, we are excited to share an exclusive summer sale. Visit our store and enjoy limited time deals. Don’t miss out on this opportunity to save.",
+    "expected_category": "Promotional"
+  },
+  {
+    "message_id": "promo_eval_02",
+    "thread_id": "promo_eval_thread_02",
+    "sender_email": "shop@northstar.example",
+    "timestamp": "2026-08-02T09:00:00Z",
+    "subject": "Summer sale starts now",
+    "body": "Dear valued customer, enjoy our exclusive summer sale. Shop our store for limited time offers and deals. Don’t miss out.",
+    "expected_category": "Promotional"
+  },
+  {
+    "message_id": "promo_eval_03",
+    "thread_id": "promo_eval_thread_03",
+    "sender_email": "members@harbor.example",
+    "timestamp": "2026-08-03T09:00:00Z",
+    "subject": "A thank-you offer",
+    "body": "Dear valued customer, as a thank you, enjoy an exclusive offer at our store. Visit our website and shop today.",
+    "expected_category": "Promotional"
+  },
+  {
+    "message_id": "promo_eval_04",
+    "thread_id": "promo_eval_thread_04",
+    "sender_email": "style@juniper.example",
+    "timestamp": "2026-08-04T09:00:00Z",
+    "subject": "Summer styles",
+    "body": "We are excited to share our summer collection. Visit our store for accessories and exclusive deals. Don’t miss out.",
+    "expected_category": "Promotional"
+  },
+  {
+    "message_id": "promo_eval_05",
+    "thread_id": "promo_eval_thread_05",
+    "sender_email": "rewards@market.example",
+    "timestamp": "2026-08-05T09:00:00Z",
+    "subject": "Customer rewards",
+    "body": "Dear valued customer, enjoy exclusive rewards and deals as a customer. Visit our store to learn more.",
+    "expected_category": "Promotional"
+  },
+  {
+    "message_id": "promo_eval_06",
+    "thread_id": "promo_eval_thread_06",
+    "sender_email": "hello@coastline.example",
+    "timestamp": "2026-08-06T09:00:00Z",
+    "subject": "Limited time offer",
+    "body": "Our exclusive summer offer is here. Shop now and enjoy 30 percent off. Don’t miss out on this limited time sale.",
+    "expected_category": "Promotional"
+  },
+  {
+    "message_id": "promo_eval_07",
+    "thread_id": "promo_eval_thread_07",
+    "sender_email": "offers@meadow.example",
+    "timestamp": "2026-08-07T09:00:00Z",
+    "subject": "Special summer offer",
+    "body": "Dear valued customer, we are excited to offer an exclusive summer sale. Visit our store today and shop limited time deals.",
+    "expected_category": "Promotional"
+  },
+  {
+    "message_id": "promo_eval_08",
+    "thread_id": "promo_eval_thread_08",
+    "sender_email": "club@orchard.example",
+    "timestamp": "2026-08-08T09:00:00Z",
+    "subject": "An exclusive offer for you",
+    "body": "Hello valued customer. Enjoy our exclusive deals this summer. Visit our store for a limited time offer and don’t miss out on these savings.",
+    "expected_category": "Promotional"
+  }
+]
