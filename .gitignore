@@ -1,0 +1,66 @@
+# Google OAuth credentials
+credentials/
+credentials.json
+client_secret.json
+
+# OAuth access/refresh token
+token.json
+
+# Environment variables
+.env
+
+# Python
+__pycache__/
+*.pyc
+
+# Model artifacts
+*.pkl
+
+# Fetched email data
+emails.json
+logs/
+data/processed.db
+data/worker_status.json
+
+# Enron mail data
+maildir/
+enron_mail_20150507.tar.gz
+
+# ChromaDB
+chroma_db/
+
+# Trash directory
+_trash/
+
+# Development scratch work
+scratch/
+
+# Private real-email fixtures
+data/fixtures/emails.json
+data/fixtures/real_sent_emails.json
+
+# ChromaDB backups
+chroma_db.bak/
+
+.DS_Store
+.env.*
+!.env.example
+/models/
+*.joblib
+*.safetensors
+*.pt
+*.pth
+*.onnx
+*.db
+*.sqlite
+*.sqlite3
+data/fixtures/real_*.json
+data/local/
+nazario_data/
+heldout_retrieval_results.json
+heldout_usefulness.json
+docs/pipeline-test-report.md
+docs/retrieval-quality-report.md
+agentmail-master-context.md
+data/datasets/combined_dataset.csv
+data/spamassassin/
