@@ -1,0 +1,1110 @@
+{
+  "cases": [
+    {
+      "id": "explicit_01",
+      "group": "explicit",
+      "received_at": "2026-10-03T09:00:00+00:00",
+      "text": "Subject: Action Required: Q3 Financial Report Submission\n\nDear Team,\n\nPlease ensure that your Q3 financial report is finalized and submitted by 15 October 2026. Late submissions will affect our audit schedule.\n\nBest regards,\nAccounting Department",
+      "expected": [
+        {
+          "date": "2026-10-15",
+          "kind": "submission",
+          "action": "submit Q3 financial report"
+        }
+      ]
+    },
+    {
+      "id": "explicit_02",
+      "group": "explicit",
+      "received_at": "2026-10-03T10:00:00+00:00",
+      "text": "Subject: Invoice #4582 Payment Reminder\n\nHi Alex,\n\nThis is a friendly reminder that payment for Invoice #4582 is due by October 20, 2026. Please process the payment to avoid late fees.\n\nThanks,\nFinance Team",
+      "expected": [
+        {
+          "date": "2026-10-20",
+          "kind": "payment",
+          "action": "pay invoice #4582"
+        }
+      ]
+    },
+    {
+      "id": "explicit_03",
+      "group": "explicit",
+      "received_at": "2026-10-04T08:00:00+00:00",
+      "text": "Subject: Interview Invitation - Senior Software Engineer\n\nDear Candidate,\n\nWe would like to invite you for an interview. Please respond by 12 October 2026 to confirm your availability.\n\nWarm regards,\nHR Team",
+      "expected": [
+        {
+          "date": "2026-10-12",
+          "kind": "response",
+          "action": "confirm interview availability"
+        }
+      ]
+    },
+    {
+      "id": "explicit_04",
+      "group": "explicit",
+      "received_at": "2026-10-05T12:00:00+00:00",
+      "text": "Subject: Call for Research Proposals\n\nHello Researchers,\n\nThe deadline for submitting your research proposal is 25 October 2026. Please upload your PDF through the submission portal.\n\nSincerely,\nResearch Committee",
+      "expected": [
+        {
+          "date": "2026-10-25",
+          "kind": "submission",
+          "action": "submit research proposal"
+        }
+      ]
+    },
+    {
+      "id": "explicit_05",
+      "group": "explicit",
+      "received_at": "2026-10-03T15:00:00+00:00",
+      "text": "Subject: Annual License Renewal\n\nHi Partner,\n\nYour software subscription renewal fee is due on November 1, 2026. Kindly complete the payment to maintain uninterrupted access.\n\nBest,\nSales Operations",
+      "expected": [
+        {
+          "date": "2026-11-01",
+          "kind": "payment",
+          "action": "pay software license renewal"
+        }
+      ]
+    },
+    {
+      "id": "explicit_06",
+      "group": "explicit",
+      "received_at": "2026-10-03T21:00:00+00:00",
+      "text": "Subject: Code Review Feedback Needed\n\nHey Team,\n\nPlease review PR #104 and submit your comments by 18 October. We plan to merge early next week.\n\nCheers,\nDev Lead",
+      "expected": [
+        {
+          "date": "2026-10-18",
+          "kind": "submission",
+          "action": "submit code review comments"
+        }
+      ]
+    },
+    {
+      "id": "explicit_07",
+      "group": "explicit",
+      "received_at": "2026-10-02T10:00:00+00:00",
+      "text": "Subject: RSVP: Annual Tech Conference 2026\n\nDear Member,\n\nPlease RSVP before 10 October 2026 to reserve your seat for the annual tech conference.\n\nBest regards,\nEvents Team",
+      "expected": [
+        {
+          "date": "2026-10-10",
+          "kind": "response",
+          "action": "RSVP for annual tech conference"
+        }
+      ]
+    },
+    {
+      "id": "explicit_08",
+      "group": "explicit",
+      "received_at": "2026-10-05T09:00:00+00:00",
+      "text": "Subject: Travel Expense Reimbursement Deadline\n\nHi All,\n\nPlease submit all September travel expense reports no later than 14 October 2026 for processing in this payroll cycle.\n\nThanks,\nPayroll Dept",
+      "expected": [
+        {
+          "date": "2026-10-14",
+          "kind": "submission",
+          "action": "submit travel expense report"
+        }
+      ]
+    },
+    {
+      "id": "explicit_09",
+      "group": "explicit",
+      "received_at": "2026-10-03T11:00:00+00:00",
+      "text": "Subject: Fall Semester Tuition Fee Due\n\nDear Student,\n\nYour fall semester tuition fee is due by 30 October 2026. Please check your student portal for payment details.\n\nRegards,\nUniversity Bursar",
+      "expected": [
+        {
+          "date": "2026-10-30",
+          "kind": "payment",
+          "action": "pay tuition fee"
+        }
+      ]
+    },
+    {
+      "id": "explicit_10",
+      "group": "explicit",
+      "received_at": "2026-10-03T14:00:00+00:00",
+      "text": "Subject: Special Discount Code Inside\n\nHi Customer,\n\nUse promo code AUTUMN20 by October 8, 2026 to get 20% off on all products.\n\nHappy Shopping,\nMarketing Team",
+      "expected": [
+        {
+          "date": "2026-10-08",
+          "kind": "expiry",
+          "action": "redeem promo code"
+        }
+      ]
+    },
+    {
+      "id": "weekday_01",
+      "group": "weekday",
+      "received_at": "2026-10-03T09:00:00+00:00",
+      "text": "Subject: Project Documentation Draft\n\nHi Sarah,\n\nCould you please review the project documentation draft and submit your changes by Friday? We need to finalize it before sprint planning.\n\nThanks,\nMark",
+      "expected": [
+        {
+          "date": "2026-10-09",
+          "kind": "submission",
+          "action": "submit documentation changes"
+        }
+      ]
+    },
+    {
+      "id": "weekday_02",
+      "group": "weekday",
+      "received_at": "2026-10-03T10:00:00+00:00",
+      "text": "Subject: Sprint Planning Availability\n\nHi Team,\n\nPlease reply by next Monday with your availability for our upcoming sprint planning session.\n\nRegards,\nScrum Master",
+      "expected": [
+        {
+          "date": "2026-10-12",
+          "kind": "response",
+          "action": "send sprint planning availability"
+        }
+      ]
+    },
+    {
+      "id": "weekday_03",
+      "group": "weekday",
+      "received_at": "2026-10-05T09:00:00+00:00",
+      "text": "Subject: Slide Deck Review\n\nHi David,\n\nPlease send your feedback on the presentation slide deck by this Thursday so we can rehearse on Friday.\n\nBest,\nElena",
+      "expected": [
+        {
+          "date": "2026-10-08",
+          "kind": "submission",
+          "action": "send feedback on slide deck"
+        }
+      ]
+    },
+    {
+      "id": "weekday_04",
+      "group": "weekday",
+      "received_at": "2026-10-05T11:00:00+00:00",
+      "text": "Subject: Vendor Payment Outstanding\n\nDear Accounts Payable,\n\nInvoice #8821 is due Wednesday. Kindly process the remittance at your earliest convenience.\n\nThank you,\nVendor Support",
+      "expected": [
+        {
+          "date": "2026-10-07",
+          "kind": "payment",
+          "action": "pay vendor invoice #8821"
+        }
+      ]
+    },
+    {
+      "id": "weekday_05",
+      "group": "weekday",
+      "received_at": "2026-10-03T20:00:00+00:00",
+      "text": "Subject: Weekly Status Update\n\nHi All,\n\nReminder to submit your weekly status updates by Friday end of day.\n\nThanks,\nProject Lead",
+      "expected": [
+        {
+          "date": "2026-10-09",
+          "kind": "submission",
+          "action": "submit weekly status update"
+        }
+      ]
+    },
+    {
+      "id": "weekday_06",
+      "group": "weekday",
+      "received_at": "2026-10-03T14:00:00+00:00",
+      "text": "Subject: Preferred Meeting Time Slots\n\nHi Jane,\n\nPlease reply by Tuesday 5 PM with your preferred time slots for the architecture review.\n\nBest,\nTech Director",
+      "expected": [
+        {
+          "date": "2026-10-06",
+          "kind": "response",
+          "action": "reply with preferred time slots"
+        }
+      ]
+    },
+    {
+      "id": "weekday_07",
+      "group": "weekday",
+      "received_at": "2026-10-05T10:00:00+00:00",
+      "text": "Subject: Final Security Audit Report\n\nDear Audit Team,\n\nThe final security audit report must be submitted by next Friday. Please complete all pending compliance checks.\n\nRegards,\nCISO Office",
+      "expected": [
+        {
+          "date": "2026-10-16",
+          "kind": "submission",
+          "action": "submit final security audit report"
+        }
+      ]
+    },
+    {
+      "id": "weekday_08",
+      "group": "weekday",
+      "received_at": "2026-10-06T09:00:00+00:00",
+      "text": "Subject: Database Migration Checklist\n\nHi Ops Team,\n\nThe migration checklist task is due by Thursday morning before we begin maintenance.\n\nThanks,\nDevOps Lead",
+      "expected": [
+        {
+          "date": "2026-10-08",
+          "kind": "other",
+          "action": "complete database migration checklist"
+        }
+      ]
+    },
+    {
+      "id": "weekday_09",
+      "group": "weekday",
+      "received_at": "2026-10-03T20:00:00+00:00",
+      "text": "Subject: Travel Itinerary Confirmation\n\nHi Rahul,\n\nPlease confirm your travel itinerary details by Wednesday so we can finalize hotel bookings.\n\nBest,\nTravel Desk",
+      "expected": [
+        {
+          "date": "2026-10-07",
+          "kind": "response",
+          "action": "confirm travel itinerary"
+        }
+      ]
+    },
+    {
+      "id": "weekday_10",
+      "group": "weekday",
+      "received_at": "2026-10-02T10:00:00+00:00",
+      "text": "Subject: Updated Resume Submission\n\nHi Applicant,\n\nPlease submit your updated resume by Monday for the recruiter screen.\n\nThanks,\nTalent Acquisition",
+      "expected": [
+        {
+          "date": "2026-10-05",
+          "kind": "submission",
+          "action": "submit updated resume"
+        }
+      ]
+    },
+    {
+      "id": "relative_01",
+      "group": "relative",
+      "received_at": "2026-10-03T09:00:00+00:00",
+      "text": "Subject: Urgent: Client Query Regarding Specs\n\nHi John,\n\nCan you please reply to the client query about API specs by tomorrow? They are waiting to start integration.\n\nThanks,\nAccount Manager",
+      "expected": [
+        {
+          "date": "2026-10-04",
+          "kind": "response",
+          "action": "reply to client query"
+        }
+      ]
+    },
+    {
+      "id": "relative_02",
+      "group": "relative",
+      "received_at": "2026-10-03T20:00:00+00:00",
+      "text": "Subject: Preliminary Budget Estimate\n\nHi Finance Team,\n\nPlease send the preliminary budget estimate by tomorrow so we can prepare for Monday's meeting.\n\nBest,\nDirector",
+      "expected": [
+        {
+          "date": "2026-10-05",
+          "kind": "submission",
+          "action": "send preliminary budget estimate"
+        }
+      ]
+    },
+    {
+      "id": "relative_03",
+      "group": "relative",
+      "received_at": "2026-10-03T10:00:00+00:00",
+      "text": "Subject: Self-Performance Review\n\nHi Employee,\n\nYour self-performance review is due in 2 days. Please log into HR portal and complete the evaluation.\n\nRegards,\nHR Operations",
+      "expected": [
+        {
+          "date": "2026-10-05",
+          "kind": "submission",
+          "action": "submit self-performance review"
+        }
+      ]
+    },
+    {
+      "id": "relative_04",
+      "group": "relative",
+      "received_at": "2026-10-05T09:00:00+00:00",
+      "text": "Subject: Customer Escalation Ticket #991\n\nDear Agent,\n\nPlease respond to customer escalation ticket #991 within 48 hours to meet our SLA.\n\nThanks,\nSupport Lead",
+      "expected": [
+        {
+          "date": "2026-10-07",
+          "kind": "response",
+          "action": "respond to customer escalation ticket"
+        }
+      ]
+    },
+    {
+      "id": "relative_05",
+      "group": "relative",
+      "received_at": "2026-10-03T22:00:00+00:00",
+      "text": "Subject: Payment Verification Required\n\nDear Customer,\n\nPlease complete payment verification within 24 hours to prevent order cancellation.\n\nRegards,\nBilling Dept",
+      "expected": [
+        {
+          "date": "2026-10-05",
+          "kind": "payment",
+          "action": "complete payment verification"
+        }
+      ]
+    },
+    {
+      "id": "relative_06",
+      "group": "relative",
+      "received_at": "2026-10-03T11:00:00+00:00",
+      "text": "Subject: Post-Webinar Feedback Survey\n\nHi Attendee,\n\nPlease fill out the post-webinar survey in 3 days to help us improve future events.\n\nBest,\nEvents Team",
+      "expected": [
+        {
+          "date": "2026-10-06",
+          "kind": "response",
+          "action": "fill out post-webinar survey"
+        }
+      ]
+    },
+    {
+      "id": "relative_07",
+      "group": "relative",
+      "received_at": "2026-10-04T08:00:00+00:00",
+      "text": "Subject: Localization Files Request\n\nHi Translator,\n\nPlease submit the translated localization files by tomorrow evening.\n\nThanks,\nProduct Manager",
+      "expected": [
+        {
+          "date": "2026-10-05",
+          "kind": "submission",
+          "action": "submit translated localization files"
+        }
+      ]
+    },
+    {
+      "id": "relative_08",
+      "group": "relative",
+      "received_at": "2026-10-05T21:00:00+00:00",
+      "text": "Subject: Email Address Verification\n\nHi User,\n\nPlease verify your new email address within 3 days by clicking the link below.\n\nRegards,\nSecurity Team",
+      "expected": [
+        {
+          "date": "2026-10-09",
+          "kind": "other",
+          "action": "verify new email address"
+        }
+      ]
+    },
+    {
+      "id": "relative_09",
+      "group": "relative",
+      "received_at": "2026-10-03T14:00:00+00:00",
+      "text": "Subject: Domain Renewal Notice\n\nDear Registrant,\n\nYour domain renewal fee is due in 5 days. Pay now to retain ownership.\n\nBest,\nDomain Registrar",
+      "expected": [
+        {
+          "date": "2026-10-08",
+          "kind": "payment",
+          "action": "pay domain renewal fee"
+        }
+      ]
+    },
+    {
+      "id": "relative_10",
+      "group": "relative",
+      "received_at": "2026-10-04T10:00:00+00:00",
+      "text": "Subject: Workshop Attendance Confirmation\n\nHi Participant,\n\nPlease confirm your participation in the workshop within 72 hours.\n\nThanks,\nOrganizer",
+      "expected": [
+        {
+          "date": "2026-10-07",
+          "kind": "response",
+          "action": "confirm workshop participation"
+        }
+      ]
+    },
+    {
+      "id": "eod_cob_01",
+      "group": "eod_cob",
+      "received_at": "2026-10-03T09:00:00+00:00",
+      "text": "Subject: Critical Bug Triage Report\n\nHi QA Team,\n\nPlease submit the critical bug triage report by EOD today so engineering can plan patches.\n\nThanks,\nLead QA",
+      "expected": [
+        {
+          "date": "2026-10-03",
+          "kind": "submission",
+          "action": "submit bug triage report"
+        }
+      ]
+    },
+    {
+      "id": "eod_cob_02",
+      "group": "eod_cob",
+      "received_at": "2026-10-03T20:00:00+00:00",
+      "text": "Subject: Urgent: PR #342 Approval Needed\n\nHi Reviewer,\n\nKindly review and approve PR #342 by COB today.\n\nBest,\nDeveloper",
+      "expected": [
+        {
+          "date": "2026-10-04",
+          "kind": "response",
+          "action": "approve PR #342"
+        }
+      ]
+    },
+    {
+      "id": "eod_cob_03",
+      "group": "eod_cob",
+      "received_at": "2026-10-03T10:00:00+00:00",
+      "text": "Subject: Updated Marketing Copy\n\nHi Copywriter,\n\nPlease submit the revised marketing copy by end of day tomorrow.\n\nRegards,\nMarketing Lead",
+      "expected": [
+        {
+          "date": "2026-10-04",
+          "kind": "submission",
+          "action": "submit revised marketing copy"
+        }
+      ]
+    },
+    {
+      "id": "eod_cob_04",
+      "group": "eod_cob",
+      "received_at": "2026-10-05T09:00:00+00:00",
+      "text": "Subject: Release Notes Draft\n\nHi Product Team,\n\nPlease send the release notes draft by end of week so we can translate them.\n\nThanks,\nRelease Manager",
+      "expected": [
+        {
+          "date": "2026-10-09",
+          "kind": "submission",
+          "action": "send release notes draft"
+        }
+      ]
+    },
+    {
+      "id": "eod_cob_05",
+      "group": "eod_cob",
+      "received_at": "2026-10-03T12:00:00+00:00",
+      "text": "Subject: Monthly Retainer Invoice\n\nDear Client,\n\nPlease settle the monthly retainer invoice by EOD Friday.\n\nBest,\nAgency Lead",
+      "expected": [
+        {
+          "date": "2026-10-09",
+          "kind": "payment",
+          "action": "pay monthly retainer invoice"
+        }
+      ]
+    },
+    {
+      "id": "eod_cob_06",
+      "group": "eod_cob",
+      "received_at": "2026-10-06T10:00:00+00:00",
+      "text": "Subject: Q4 Headcount Estimates\n\nHi Managers,\n\nPlease provide your Q4 headcount estimates by COB Thursday.\n\nRegards,\nHR Director",
+      "expected": [
+        {
+          "date": "2026-10-08",
+          "kind": "response",
+          "action": "provide Q4 headcount estimates"
+        }
+      ]
+    },
+    {
+      "id": "eod_cob_07",
+      "group": "eod_cob",
+      "received_at": "2026-10-05T14:00:00+00:00",
+      "text": "Subject: Q3 Performance Metrics Summary\n\nHi Analytics Team,\n\nPlease submit the Q3 metrics summary by end of day Wednesday.\n\nBest,\nVP Engineering",
+      "expected": [
+        {
+          "date": "2026-10-07",
+          "kind": "submission",
+          "action": "submit Q3 metrics summary"
+        }
+      ]
+    },
+    {
+      "id": "eod_cob_08",
+      "group": "eod_cob",
+      "received_at": "2026-10-05T08:00:00+00:00",
+      "text": "Subject: Hotel Reservation Confirmation Details\n\nHi Travel Agent,\n\nPlease confirm hotel booking details by COB today.\n\nThanks,\nExecutive Asst",
+      "expected": [
+        {
+          "date": "2026-10-05",
+          "kind": "response",
+          "action": "confirm hotel booking details"
+        }
+      ]
+    },
+    {
+      "id": "eod_cob_09",
+      "group": "eod_cob",
+      "received_at": "2026-10-03T15:00:00+00:00",
+      "text": "Subject: Security Awareness Onboarding\n\nHi New Hire,\n\nPlease complete Onboarding Module 2 by EOD next Tuesday.\n\nRegards,\nIT Compliance",
+      "expected": [
+        {
+          "date": "2026-10-06",
+          "kind": "other",
+          "action": "complete security onboarding module 2"
+        }
+      ]
+    },
+    {
+      "id": "eod_cob_10",
+      "group": "eod_cob",
+      "received_at": "2026-10-04T09:00:00+00:00",
+      "text": "Subject: Design Mockups for Mobile App\n\nHi Designers,\n\nPlease submit the final UI mockups by end of week.\n\nThanks,\nProduct Lead",
+      "expected": [
+        {
+          "date": "2026-10-09",
+          "kind": "submission",
+          "action": "submit mobile UI mockups"
+        }
+      ]
+    },
+    {
+      "id": "soft_words_01",
+      "group": "soft_words",
+      "received_at": "2026-10-03T09:00:00+00:00",
+      "text": "Subject: Training Session Registration Open\n\nDear Employees,\n\nRegistration for the Leadership Training session remains open until Friday, Oct 9. Reserve your spot early.\n\nBest,\nL&D Team",
+      "expected": [
+        {
+          "date": "2026-10-09",
+          "kind": "expiry",
+          "action": "register for training session"
+        }
+      ]
+    },
+    {
+      "id": "soft_words_02",
+      "group": "soft_words",
+      "received_at": "2026-10-03T10:00:00+00:00",
+      "text": "Subject: Password Reset Request\n\nHi User,\n\nYour password reset link expires on 12 October 2026. If you did not request this, please ignore.\n\nRegards,\nIT Support",
+      "expected": [
+        {
+          "date": "2026-10-12",
+          "kind": "expiry",
+          "action": "reset account password"
+        }
+      ]
+    },
+    {
+      "id": "soft_words_03",
+      "group": "soft_words",
+      "received_at": "2026-10-05T09:00:00+00:00",
+      "text": "Subject: Fall Internship Application Portal\n\nDear Applicants,\n\nThe application portal closes Sunday, 11 October at midnight. Ensure all documents are uploaded.\n\nSincerely,\nRecruiting Team",
+      "expected": [
+        {
+          "date": "2026-10-11",
+          "kind": "expiry",
+          "action": "submit internship application"
+        }
+      ]
+    },
+    {
+      "id": "soft_words_04",
+      "group": "soft_words",
+      "received_at": "2026-10-03T11:00:00+00:00",
+      "text": "Subject: Conference Fee Refund Policy\n\nHi Delegate,\n\nThe last day to request a full course refund is October 20, 2026.\n\nThanks,\nFinance Office",
+      "expected": [
+        {
+          "date": "2026-10-20",
+          "kind": "expiry",
+          "action": "request course fee refund"
+        }
+      ]
+    },
+    {
+      "id": "soft_words_05",
+      "group": "soft_words",
+      "received_at": "2026-10-05T10:00:00+00:00",
+      "text": "Subject: Exclusive 30% Off Software License\n\nHi Subscriber,\n\nYour 30% discount code is valid through Thursday, Oct 8. Upgrade today!\n\nBest,\nSaaS Marketing",
+      "expected": [
+        {
+          "date": "2026-10-08",
+          "kind": "expiry",
+          "action": "redeem software license discount"
+        }
+      ]
+    },
+    {
+      "id": "soft_words_06",
+      "group": "soft_words",
+      "received_at": "2026-10-03T13:00:00+00:00",
+      "text": "Subject: Employee Engagement Survey\n\nHi All,\n\nThe feedback survey remains open until October 15, 2026. Your input is valuable.\n\nRegards,\nPeople Team",
+      "expected": [
+        {
+          "date": "2026-10-15",
+          "kind": "submission",
+          "action": "fill out employee survey"
+        }
+      ]
+    },
+    {
+      "id": "soft_words_07",
+      "group": "soft_words",
+      "received_at": "2026-10-03T09:00:00+00:00",
+      "text": "Subject: Free Trial Expiration Warning\n\nDear User,\n\nYour 14-day free trial period expires tomorrow. Upgrade your account to maintain access.\n\nBest,\nSubscription Desk",
+      "expected": [
+        {
+          "date": "2026-10-04",
+          "kind": "expiry",
+          "action": "upgrade trial subscription"
+        }
+      ]
+    },
+    {
+      "id": "soft_words_08",
+      "group": "soft_words",
+      "received_at": "2026-10-04T11:00:00+00:00",
+      "text": "Subject: Research Grant Submission Window\n\nDear Principal Investigator,\n\nThe grant proposal closing date is 14 October 2026. Late submissions will not be reviewed.\n\nSincerely,\nGrant Office",
+      "expected": [
+        {
+          "date": "2026-10-14",
+          "kind": "submission",
+          "action": "submit research grant proposal"
+        }
+      ]
+    },
+    {
+      "id": "soft_words_09",
+      "group": "soft_words",
+      "received_at": "2026-10-05T14:00:00+00:00",
+      "text": "Subject: Advisory Board Nomination Form\n\nHi Team,\n\nWe are accepting nominations through Friday, October 9. Please submit candidates online.\n\nThanks,\nGovernance Committee",
+      "expected": [
+        {
+          "date": "2026-10-09",
+          "kind": "response",
+          "action": "submit advisory board nomination"
+        }
+      ]
+    },
+    {
+      "id": "soft_words_10",
+      "group": "soft_words",
+      "received_at": "2026-10-03T16:00:00+00:00",
+      "text": "Subject: Promotional Hosting Deal\n\nDear Webmaster,\n\nOur special hosting promotion offer is good until October 18, 2026.\n\nBest,\nCloud Sales",
+      "expected": [
+        {
+          "date": "2026-10-18",
+          "kind": "expiry",
+          "action": "purchase hosting deal"
+        }
+      ]
+    },
+    {
+      "id": "multi_date_01",
+      "group": "multi_date",
+      "received_at": "2026-10-03T09:00:00+00:00",
+      "text": "Subject: Q3 Strategy Feedback & Client Meeting\n\nHi Team,\n\nPlease submit feedback before Friday 9 October at 5 PM. The client meeting on Monday 12 October at 10 AM requires our finalized deck.\n\nBest regards,\nProject Manager",
+      "expected": [
+        {
+          "date": "2026-10-09",
+          "kind": "submission",
+          "action": "submit feedback on Q3 strategy deck"
+        }
+      ]
+    },
+    {
+      "id": "multi_date_02",
+      "group": "multi_date",
+      "received_at": "2026-10-03T10:00:00+00:00",
+      "text": "Subject: Annual Team Retreat RSVP\n\nHi Everyone,\n\nPlease RSVP before October 15 so we can finalize headcount. The team retreat will take place on October 22.\n\nThanks,\nHR Team",
+      "expected": [
+        {
+          "date": "2026-10-15",
+          "kind": "response",
+          "action": "RSVP for team retreat"
+        }
+      ]
+    },
+    {
+      "id": "multi_date_03",
+      "group": "multi_date",
+      "received_at": "2026-10-04T09:00:00+00:00",
+      "text": "Subject: Keynote Presentation Slides\n\nHi Speaker,\n\nSend your presentation slides by October 8. The conference keynote is on October 14 at the main hall.\n\nBest,\nConference Chair",
+      "expected": [
+        {
+          "date": "2026-10-08",
+          "kind": "submission",
+          "action": "send presentation slides"
+        }
+      ]
+    },
+    {
+      "id": "multi_date_04",
+      "group": "multi_date",
+      "received_at": "2026-10-03T11:00:00+00:00",
+      "text": "Subject: Workshop Registration & Payment\n\nDear Participant,\n\nPay your registration fee by October 10 to confirm your spot. The hands-on workshop is scheduled for October 18.\n\nRegards,\nWorkshop Coordinator",
+      "expected": [
+        {
+          "date": "2026-10-10",
+          "kind": "payment",
+          "action": "pay workshop registration fee"
+        }
+      ]
+    },
+    {
+      "id": "multi_date_05",
+      "group": "multi_date",
+      "received_at": "2026-10-05T09:00:00+00:00",
+      "text": "Subject: Code Freeze & Release Schedule\n\nHi Engineers,\n\nSubmit your code changes for QA testing before Wednesday 7 October. The product launch on Friday 16 October cannot be delayed.\n\nThanks,\nTech Lead",
+      "expected": [
+        {
+          "date": "2026-10-07",
+          "kind": "submission",
+          "action": "submit code changes for QA testing"
+        }
+      ]
+    },
+    {
+      "id": "multi_date_06",
+      "group": "multi_date",
+      "received_at": "2026-10-03T14:00:00+00:00",
+      "text": "Subject: Onsite Audit Visit\n\nHi Audit Lead,\n\nPlease confirm your flight details by October 11. The site visit will begin on October 19 at our HQ.\n\nBest,\nOperations Desk",
+      "expected": [
+        {
+          "date": "2026-10-11",
+          "kind": "response",
+          "action": "confirm flight details"
+        }
+      ]
+    },
+    {
+      "id": "multi_date_07",
+      "group": "multi_date",
+      "received_at": "2026-10-04T10:00:00+00:00",
+      "text": "Subject: Innovation Grant Proposals\n\nDear Applicants,\n\nUpload your project proposal before October 13. Project evaluations start on October 20 with the committee.\n\nSincerely,\nGrant Board",
+      "expected": [
+        {
+          "date": "2026-10-13",
+          "kind": "submission",
+          "action": "upload project proposal"
+        }
+      ]
+    },
+    {
+      "id": "multi_date_08",
+      "group": "multi_date",
+      "received_at": "2026-10-03T20:00:00+00:00",
+      "text": "Subject: Background Check Consent & Start Date\n\nHi Alex,\n\nComplete your background check consent by Friday 9 October. Your start date on Monday 19 October is approaching.\n\nWarmly,\nHR Onboarding",
+      "expected": [
+        {
+          "date": "2026-10-09",
+          "kind": "other",
+          "action": "complete background check consent"
+        }
+      ]
+    },
+    {
+      "id": "multi_date_09",
+      "group": "multi_date",
+      "received_at": "2026-10-03T15:00:00+00:00",
+      "text": "Subject: Town Hall Q&A Submissions\n\nHi Team,\n\nSend your questions by October 6. The live Q&A session with leadership is on October 9 at 4 PM.\n\nBest,\nInternal Comms",
+      "expected": [
+        {
+          "date": "2026-10-06",
+          "kind": "submission",
+          "action": "send questions for leadership Q&A"
+        }
+      ]
+    },
+    {
+      "id": "multi_date_10",
+      "group": "multi_date",
+      "received_at": "2026-10-05T11:00:00+00:00",
+      "text": "Subject: Remittance for Invoice #982\n\nHi Accounts,\n\nPay invoice #982 by October 16. The consulting services were rendered on September 28.\n\nThanks,\nConsultant",
+      "expected": [
+        {
+          "date": "2026-10-16",
+          "kind": "payment",
+          "action": "pay invoice #982"
+        }
+      ]
+    },
+    {
+      "id": "meeting_not_deadline_01",
+      "group": "meeting_not_deadline",
+      "received_at": "2026-10-03T09:00:00+00:00",
+      "text": "Subject: Interview Confirmation - Technical Round\n\nDear Candidate,\n\nYour technical interview is scheduled for Tuesday 6 October at 3:00 PM IST. A calendar invite has been sent.\n\nBest regards,\nRecruiting Team",
+      "expected": []
+    },
+    {
+      "id": "meeting_not_deadline_02",
+      "group": "meeting_not_deadline",
+      "received_at": "2026-10-03T10:00:00+00:00",
+      "text": "Subject: Weekly Sync Reminder\n\nHi Team,\n\nOur weekly sync is scheduled for Thursday, Oct 8 at 10 AM IST. See you all in the conference room.\n\nThanks,\nScrum Master",
+      "expected": []
+    },
+    {
+      "id": "meeting_not_deadline_03",
+      "group": "meeting_not_deadline",
+      "received_at": "2026-10-04T09:00:00+00:00",
+      "text": "Subject: Company Town Hall Announcement\n\nHello All,\n\nThe annual company town hall takes place on Friday, Oct 16. Looking forward to sharing key updates.\n\nBest,\nExecutive Office",
+      "expected": []
+    },
+    {
+      "id": "meeting_not_deadline_04",
+      "group": "meeting_not_deadline",
+      "received_at": "2026-10-03T11:00:00+00:00",
+      "text": "Subject: Client Demo Booking\n\nHi Mark,\n\nI have booked our product demo with Acme Corp for Monday, October 12 at 4 PM.\n\nCheers,\nSales Rep",
+      "expected": []
+    },
+    {
+      "id": "meeting_not_deadline_05",
+      "group": "meeting_not_deadline",
+      "received_at": "2026-10-05T09:00:00+00:00",
+      "text": "Subject: Virtual Coffee Chat\n\nHi Team,\n\nJoin us for a casual virtual coffee chat on October 7 at 5 PM. Bring your favorite beverage!\n\nBest,\nSocial Committee",
+      "expected": []
+    },
+    {
+      "id": "meeting_not_deadline_06",
+      "group": "meeting_not_deadline",
+      "received_at": "2026-10-03T14:00:00+00:00",
+      "text": "Subject: Webinar: Cloud Architecture Best Practices\n\nDear Subscriber,\n\nThe webinar on Cloud Architecture starts on October 14 at 2 PM IST. Don't forget to add it to your calendar.\n\nRegards,\nTech Community",
+      "expected": []
+    },
+    {
+      "id": "meeting_not_deadline_07",
+      "group": "meeting_not_deadline",
+      "received_at": "2026-10-04T10:00:00+00:00",
+      "text": "Subject: Dental Appointment Confirmation\n\nDear Patient,\n\nYour dental checkup appointment is scheduled for Oct 15 at 11:00 AM at City Clinic.\n\nThanks,\nCity Clinic",
+      "expected": []
+    },
+    {
+      "id": "meeting_not_deadline_08",
+      "group": "meeting_not_deadline",
+      "received_at": "2026-10-03T20:00:00+00:00",
+      "text": "Subject: Product Roadmap Discussion\n\nHi Product Leads,\n\nWe have added a calendar invite for the product roadmap discussion on October 9.\n\nBest,\nProduct Operations",
+      "expected": []
+    },
+    {
+      "id": "meeting_not_deadline_09",
+      "group": "meeting_not_deadline",
+      "received_at": "2026-10-03T15:00:00+00:00",
+      "text": "Subject: Tech Conference 2026 Dates\n\nHello Community,\n\nTech Conference 2026 is happening on October 24 and 25 at the Convention Center.\n\nRegards,\nOrganizers",
+      "expected": []
+    },
+    {
+      "id": "meeting_not_deadline_10",
+      "group": "meeting_not_deadline",
+      "received_at": "2026-10-05T11:00:00+00:00",
+      "text": "Subject: Team Celebration Dinner\n\nHi Folks,\n\nOur team dinner will be on October 13 at 7 PM at Bistro Central.\n\nCheers,\nTeam Manager",
+      "expected": []
+    },
+    {
+      "id": "past_date_01",
+      "group": "past_date",
+      "received_at": "2026-10-03T09:00:00+00:00",
+      "text": "Subject: Summary Notes: Sept 15 Meeting\n\nHi All,\n\nAs we discussed during our meeting on 15 September 2026, here are the meeting notes for your reference.\n\nBest,\nProject Coordinator",
+      "expected": []
+    },
+    {
+      "id": "past_date_02",
+      "group": "past_date",
+      "received_at": "2026-10-03T10:00:00+00:00",
+      "text": "Subject: Workshop Recording Available\n\nHi Attendee,\n\nThank you for attending the workshop on October 1, 2026. Here is the recording link.\n\nRegards,\nSpeaker",
+      "expected": []
+    },
+    {
+      "id": "past_date_03",
+      "group": "past_date",
+      "received_at": "2026-10-04T09:00:00+00:00",
+      "text": "Subject: Payment Receipt #102\n\nDear Customer,\n\nPayment for invoice #102 was processed successfully on 28 September.\n\nThank you,\nFinance Department",
+      "expected": []
+    },
+    {
+      "id": "past_date_04",
+      "group": "past_date",
+      "received_at": "2026-10-03T11:00:00+00:00",
+      "text": "Subject: Q4 Roadmap Follow-up\n\nHi Team,\n\nWe met on 12 September to discuss the Q4 roadmap. Attached is the final document.\n\nBest,\nProduct Manager",
+      "expected": []
+    },
+    {
+      "id": "past_date_05",
+      "group": "past_date",
+      "received_at": "2026-10-05T09:00:00+00:00",
+      "text": "Subject: Shipping Confirmation #4892\n\nHi Buyer,\n\nYour order #4892 was shipped on October 2, 2026 via Express Post.\n\nThanks,\nLogistics Team",
+      "expected": []
+    },
+    {
+      "id": "past_date_06",
+      "group": "past_date",
+      "received_at": "2026-10-03T14:00:00+00:00",
+      "text": "Subject: Maintenance Completed\n\nHi Users,\n\nThe scheduled system maintenance completed yesterday, October 2. All systems are operational.\n\nRegards,\nIT Ops",
+      "expected": []
+    },
+    {
+      "id": "past_date_07",
+      "group": "past_date",
+      "received_at": "2026-10-04T10:00:00+00:00",
+      "text": "Subject: Reference: Last Week Discussion\n\nHi David,\n\nIn our email exchange last Friday, September 25, you mentioned the budget constraint.\n\nBest,\nConsultant",
+      "expected": []
+    },
+    {
+      "id": "past_date_08",
+      "group": "past_date",
+      "received_at": "2026-10-03T20:00:00+00:00",
+      "text": "Subject: Q3 Tax Return Filing Confirmation\n\nDear Client,\n\nThe quarterly tax return was filed on September 30, 2026.\n\nSincerely,\nTax Consultant",
+      "expected": []
+    },
+    {
+      "id": "past_date_09",
+      "group": "past_date",
+      "received_at": "2026-10-03T15:00:00+00:00",
+      "text": "Subject: Contract Execution Notice\n\nHi Team,\n\nAs agreed in our contract signed on August 15, the project phases are moving forward.\n\nRegards,\nLegal Team",
+      "expected": []
+    },
+    {
+      "id": "past_date_10",
+      "group": "past_date",
+      "received_at": "2026-10-05T11:00:00+00:00",
+      "text": "Subject: Version 2.4 Release Notes\n\nHello Community,\n\nWe released version 2.4 on October 1, 2026. Check out the changelog.\n\nBest,\nEngineering Team",
+      "expected": []
+    },
+    {
+      "id": "no_date_01",
+      "group": "no_date",
+      "received_at": "2026-10-03T09:00:00+00:00",
+      "text": "Subject: Document Review Request\n\nHi Team,\n\nPlease review the attached document when you get a chance and share your thoughts.\n\nBest,\nProject Manager",
+      "expected": []
+    },
+    {
+      "id": "no_date_02",
+      "group": "no_date",
+      "received_at": "2026-10-03T10:00:00+00:00",
+      "text": "Subject: Updated Project Specs\n\nHi All,\n\nHere is the updated project documentation for your reference.\n\nThanks,\nLead Architect",
+      "expected": []
+    },
+    {
+      "id": "no_date_03",
+      "group": "no_date",
+      "received_at": "2026-10-04T09:00:00+00:00",
+      "text": "Subject: Follow-up on Proposal\n\nHi Alex,\n\nJust checking in to see if you have any questions about the proposal we sent over.\n\nBest,\nSales Lead",
+      "expected": []
+    },
+    {
+      "id": "no_date_04",
+      "group": "no_date",
+      "received_at": "2026-10-03T11:00:00+00:00",
+      "text": "Subject: Welcome to the Team!\n\nHi Jamie,\n\nWelcome to the team! We are excited to have you onboard and look forward to working together.\n\nRegards,\nTeam Lead",
+      "expected": []
+    },
+    {
+      "id": "no_date_05",
+      "group": "no_date",
+      "received_at": "2026-10-05T09:00:00+00:00",
+      "text": "Subject: Monthly Newsletter Issue #12\n\nHello Readers,\n\nYour monthly newsletter is now available. Read about our latest tech updates and company news.\n\nBest,\nEditorial Team",
+      "expected": []
+    },
+    {
+      "id": "no_date_06",
+      "group": "no_date",
+      "received_at": "2026-10-03T14:00:00+00:00",
+      "text": "Subject: Account Password Help\n\nHi Support,\n\nCan you please reset my account password? I am having trouble logging in.\n\nThanks,\nUser",
+      "expected": []
+    },
+    {
+      "id": "no_date_07",
+      "group": "no_date",
+      "received_at": "2026-10-04T10:00:00+00:00",
+      "text": "Subject: Great Presentation Today\n\nHi Sarah,\n\nGreat job on the presentation today! The client was really impressed.\n\nCheers,\nManager",
+      "expected": []
+    },
+    {
+      "id": "no_date_08",
+      "group": "no_date",
+      "received_at": "2026-10-03T20:00:00+00:00",
+      "text": "Subject: Purchase Receipt\n\nDear Customer,\n\nPlease find attached the receipt for your recent purchase. Thank you for choosing us.\n\nRegards,\nStore Support",
+      "expected": []
+    },
+    {
+      "id": "no_date_09",
+      "group": "no_date",
+      "received_at": "2026-10-03T15:00:00+00:00",
+      "text": "Subject: Catching Up\n\nHi Chris,\n\nLet me know if you are free for a quick catch-up chat sometime.\n\nBest,\nPat",
+      "expected": []
+    },
+    {
+      "id": "no_date_10",
+      "group": "no_date",
+      "received_at": "2026-10-05T11:00:00+00:00",
+      "text": "Subject: Server Backup Status\n\nHi Admin,\n\nThe daily server backup has completed successfully without errors.\n\nRegards,\nBackup Daemon",
+      "expected": []
+    },
+    {
+      "id": "tricky_01",
+      "group": "tricky",
+      "received_at": "2026-10-03T09:00:00+00:00",
+      "text": "Subject: Midnight Sale - Flash Deal\n\nHi Shopper,\n\nOur exclusive flash sale offer ends tonight at midnight. Don't miss out on savings!\n\nBest,\nRetail Team",
+      "expected": [
+        {
+          "date": "2026-10-03",
+          "kind": "expiry",
+          "action": "claim flash deal discount"
+        }
+      ]
+    },
+    {
+      "id": "tricky_02",
+      "group": "tricky",
+      "received_at": "2026-10-03T10:00:00+00:00",
+      "text": "Subject: Project Planning Follow-up\n\nHi Team,\n\nWe should schedule a review sometime next week to go over the design drafts.\n\nRegards,\nPM",
+      "expected": []
+    },
+    {
+      "id": "tricky_03",
+      "group": "tricky",
+      "received_at": "2026-10-04T09:00:00+00:00",
+      "text": "Subject: Re: Submit Q3 Report\n\n> Please submit the Q3 report by September 20.\n\nGot it, thanks. I will send the updated document shortly.\n\nBest,\nAnalyst",
+      "expected": []
+    },
+    {
+      "id": "tricky_04",
+      "group": "tricky",
+      "received_at": "2026-10-03T10:00:00+00:00",
+      "text": "Subject: Fwd: Action Required: Submit Travel Expenses\n\n---------- Forwarded message ---------\nFrom: Finance Team <finance@company.com>\n\nPlease submit all travel expense reports by October 12, 2026 for approval.\n\nRegards,\nFinance Team",
+      "expected": [
+        {
+          "date": "2026-10-12",
+          "kind": "submission",
+          "action": "submit travel expense report"
+        }
+      ]
+    },
+    {
+      "id": "tricky_05",
+      "group": "tricky",
+      "received_at": "2026-10-03T10:00:00+00:00",
+      "text": "Subject: Global Partner Proposal Deadline\n\nDear Partners,\n\nPlease submit your proposal by 5:00 PM EST on October 9 (which is 2:30 AM IST on October 10).\n\nBest regards,\nGlobal Ops",
+      "expected": [
+        {
+          "date": "2026-10-10",
+          "kind": "submission",
+          "action": "submit global partner proposal"
+        }
+      ]
+    },
+    {
+      "id": "tricky_06",
+      "group": "tricky",
+      "received_at": "2026-10-03T09:00:00+00:00",
+      "text": "Subject: Annual Membership Fee\n\nHi Member,\n\nYour annual membership fee must be paid by the end of the month (October 31, 2026).\n\nThanks,\nClub Admin",
+      "expected": [
+        {
+          "date": "2026-10-31",
+          "kind": "payment",
+          "action": "pay annual membership fee"
+        }
+      ]
+    },
+    {
+      "id": "tricky_07",
+      "group": "tricky",
+      "received_at": "2026-10-03T09:00:00+00:00",
+      "text": "Subject: Re: Code Review Progress\n\n> When will the pull request comments be addressed?\n\nI am working on it now and will submit all code review comments by tomorrow EOD.\n\nCheers,\nDeveloper",
+      "expected": [
+        {
+          "date": "2026-10-04",
+          "kind": "submission",
+          "action": "submit code review comments"
+        }
+      ]
+    },
+    {
+      "id": "tricky_08",
+      "group": "tricky",
+      "received_at": "2026-10-05T09:00:00+00:00",
+      "text": "Subject: Mega Autumn Sale\n\nHi Customer,\n\nOur annual autumn store sale ends this Sunday. Shop online now for up to 50% off.\n\nBest,\nStore Team",
+      "expected": [
+        {
+          "date": "2026-10-11",
+          "kind": "expiry",
+          "action": "shop autumn store sale"
+        }
+      ]
+    },
+    {
+      "id": "tricky_09",
+      "group": "tricky",
+      "received_at": "2026-10-04T10:00:00+00:00",
+      "text": "Subject: Conference Early Bird Registration\n\nHi Delegate,\n\nEarly bird registration closes at 11:30 PM UTC on October 8 (which is October 9 at 5:00 AM IST).\n\nRegards,\nConference Team",
+      "expected": [
+        {
+          "date": "2026-10-09",
+          "kind": "expiry",
+          "action": "register for early bird conference rate"
+        }
+      ]
+    },
+    {
+      "id": "tricky_10",
+      "group": "tricky",
+      "received_at": "2026-10-05T11:00:00+00:00",
+      "text": "Subject: Future Office Relocation\n\nHi Staff,\n\nWe plan to initiate the office relocation process in a few weeks. Further details will follow.\n\nRegards,\nFacilities",
+      "expected": []
+    }
+  ],
+  "needs_review": [
+    "tricky_05",
+    "tricky_06"
+  ]
+}
