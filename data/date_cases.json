@@ -781,6 +781,141 @@
       ]
     },
     {
+      "id": "multi_date_11",
+      "group": "multi_date",
+      "received_at": "2026-10-03T09:00:00+00:00",
+      "text": "Subject: Board Meeting Materials Due Oct 15\n\nHey everyone,\n\nWe need all board presentation materials ready for review by October 15, since the actual board meeting happens on October 20.\n\nThanks,\nExecutive Assistant",
+      "expected": [
+        {
+          "date": "2026-10-15",
+          "kind": "submission",
+          "action": "submit board presentation materials"
+        }
+      ]
+    },
+    {
+      "id": "multi_date_12",
+      "group": "multi_date",
+      "received_at": "2026-10-03T10:00:00+00:00",
+      "text": "Subject: Training Materials Deadline Before Workshop\n\nHi Team,\n\nPlease finalize the training modules by October 10 because the hands-on workshop begins on October 18.\n\nBest,\nTraining Coordinator",
+      "expected": [
+        {
+          "date": "2026-10-10",
+          "kind": "submission",
+          "action": "finalize training modules"
+        }
+      ]
+    },
+    {
+      "id": "multi_date_13",
+      "group": "multi_date",
+      "received_at": "2026-10-04T09:00:00+00:00",
+      "text": "Subject: Client Demo Prep Due Nov 5 Before Nov 12 Presentation\n\nHello Sales,\n\nThe demo environment must be complete by November 5, as the client presentation is scheduled for November 12.\n\nRegards,\nSales Ops",
+      "expected": [
+        {
+          "date": "2026-11-05",
+          "kind": "submission",
+          "action": "complete demo environment"
+        }
+      ]
+    },
+    {
+      "id": "multi_date_14",
+      "group": "multi_date",
+      "received_at": "2026-10-03T11:00:00+00:00",
+      "text": "Subject: Budget Approval Needed Sept 30 for Oct 15 Project Start\n\nDear Finance,\n\nBudget approval is required by September 30 to ensure the project can launch on October 15.\n\nSincerely,\nProject Manager",
+      "expected": [
+        {
+          "date": "2026-09-30",
+          "kind": "response",
+          "action": "approve project budget"
+        }
+      ]
+    },
+    {
+      "id": "multi_date_15",
+      "group": "multi_date",
+      "received_at": "2026-10-05T09:00:00+00:00",
+      "text": "Subject: Event Registration Closes Oct 20 Before Oct 25 Conference\n\nHi Attendees,\n\nAll event registrations must be submitted by October 20, ahead of the conference kick-off on October 25.\n\nBest,\nEvent Organizer",
+      "expected": [
+        {
+          "date": "2026-10-20",
+          "kind": "response",
+          "action": "submit event registration"
+        }
+      ]
+    },
+    {
+      "id": "multi_date_16",
+      "group": "multi_date",
+      "received_at": "2026-10-03T14:00:00+00:00",
+      "text": "Subject: Proposal Submission Deadline: December 10\n\nDear Consultants,\n\nPlease submit your RFP responses by December 10. The review committee will evaluate all submissions on December 15.\n\nWarm regards,\nProcurement Team",
+      "expected": [
+        {
+          "date": "2026-12-10",
+          "kind": "submission",
+          "action": "submit RFP response"
+        }
+      ]
+    },
+    {
+      "id": "multi_date_17",
+      "group": "multi_date",
+      "received_at": "2026-10-04T10:00:00+00:00",
+      "text": "Subject: Final Payment Due Oct 31 Before Service Renewal Nov 1\n\nHi Customer,\n\nYour final installment is due October 31, prior to the service renewal taking effect on November 1.\n\nThanks,\nBilling Department",
+      "expected": [
+        {
+          "date": "2026-10-31",
+          "kind": "payment",
+          "action": "pay final installment"
+        }
+      ]
+    },
+    {
+      "id": "multi_date_18",
+      "group": "multi_date",
+      "received_at": "2026-10-03T20:00:00+00:00",
+      "text": "Subject: Abstract Deadline: March 15 for April 20 Symposium\n\nDear Researchers,\n\nAll research abstracts must be received by March 15, since the symposium presentations begin on April 20.\n\nBest,\nResearch Symposium Committee",
+      "expected": [
+        {
+          "date": "2027-03-15",
+          "kind": "submission",
+          "action": "submit research abstract"
+        }
+      ]
+    },
+    {
+      "id": "multi_date_19",
+      "group": "multi_date",
+      "received_at": "2026-10-03T15:00:00+00:00",
+      "text": "Subject: Two Deadlines: Code Review Oct 8 and Merge Oct 12\n\nHi Developers,\n\nPlease complete code reviews by October 8, and we plan to merge the changes on October 12.\n\nCheers,\nTech Lead",
+      "expected": [
+        {
+          "date": "2026-10-08",
+          "kind": "submission",
+          "action": "complete code reviews"
+        }
+      ]
+    },
+    {
+      "id": "multi_date_20",
+      "group": "multi_date",
+      "received_at": "2026-10-05T11:00:00+00:00",
+      "text": "Subject: Submit Budget by Oct 10 and Final Plan by Oct 15\n\nDear Department Heads,\n\nPlease submit your preliminary budget estimates by October 10, followed by the finalized plans on October 15.\n\nRegards,\nFinance Office",
+      "expected": [
+        {
+          "date": "2026-10-10",
+          "kind": "submission",
+          "action": "submit preliminary budget estimates"
+        },
+        {
+          "date": "2026-10-15",
+          "kind": "submission",
+          "action": "submit finalized plans"
+        }
+      ]
+    },
+    {
       "id": "meeting_not_deadline_01",
       "group": "meeting_not_deadline",
       "received_at": "2026-10-03T09:00:00+00:00",
@@ -995,13 +1130,7 @@
       "group": "tricky",
       "received_at": "2026-10-03T09:00:00+00:00",
       "text": "Subject: Midnight Sale - Flash Deal\n\nHi Shopper,\n\nOur exclusive flash sale offer ends tonight at midnight. Don't miss out on savings!\n\nBest,\nRetail Team",
-      "expected": [
-        {
-          "date": "2026-10-03",
-          "kind": "expiry",
-          "action": "claim flash deal discount"
-        }
-      ]
+      "expected": []
     },
     {
       "id": "tricky_02",
@@ -1061,26 +1190,14 @@
       "group": "tricky",
       "received_at": "2026-10-03T09:00:00+00:00",
       "text": "Subject: Re: Code Review Progress\n\n> When will the pull request comments be addressed?\n\nI am working on it now and will submit all code review comments by tomorrow EOD.\n\nCheers,\nDeveloper",
-      "expected": [
-        {
-          "date": "2026-10-04",
-          "kind": "submission",
-          "action": "submit code review comments"
-        }
-      ]
+      "expected": []
     },
     {
       "id": "tricky_08",
       "group": "tricky",
       "received_at": "2026-10-05T09:00:00+00:00",
       "text": "Subject: Mega Autumn Sale\n\nHi Customer,\n\nOur annual autumn store sale ends this Sunday. Shop online now for up to 50% off.\n\nBest,\nStore Team",
-      "expected": [
-        {
-          "date": "2026-10-11",
-          "kind": "expiry",
-          "action": "shop autumn store sale"
-        }
-      ]
+      "expected": []
     },
     {
       "id": "tricky_09",
