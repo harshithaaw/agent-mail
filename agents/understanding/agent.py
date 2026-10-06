@@ -1,4 +1,9 @@
 import json
+import logging
+from contextlib import contextmanager
+from contextvars import ContextVar
+from datetime import datetime
+from pathlib import Path
 from typing import TypedDict, Annotated, List
 
 from langchain_core.messages import (
@@ -18,9 +23,53 @@ from agents.understanding.extractor import extract_tasks as _extract_tasks
 from agents.understanding.prioritizer import (
     has_urgency_words,
     detect_deadline as _detect_deadline,
+    detect_deadline_legacy,
     compute_priority,
 )
+from agents.understanding.deadline_detector import detect_deadline_v2
 from agents.understanding.summarizer import summarize_email
+
+log = logging.getLogger(__name__)
+DEADLINE_SHADOW_LOG_PATH = Path(__file__).resolve().parents[2] / "logs" / "deadline_shadow.jsonl"
+_DEADLINE_CONTEXT: ContextVar[tuple[object, object]] = ContextVar(
+    "agentmail_deadline_context", default=(None, None)
+)
+
+
+@contextmanager
+def deadline_context(received_at=None, message_id=None):
+    token = _DEADLINE_CONTEXT.set((received_at, message_id))
+    try:
+        yield
+    finally:
+        _DEADLINE_CONTEXT.reset(token)
+
+
+def _deadline_with_shadow(text: str) -> dict:
+    received_at, message_id = _DEADLINE_CONTEXT.get()
+    result = _detect_deadline(text, received_at)
+    try:
+        old_result = detect_deadline_legacy(text)
+        new_result = detect_deadline_v2(text, received_at)
+        record = {
+            "received_at": received_at.isoformat() if isinstance(received_at, datetime) else received_at,
+            "old_result": {
+                "deadline_date": old_result.get("deadline_date"),
+                "raw_phrase": old_result.get("raw_phrase"),
+            },
+            "new_result": {
+                "deadline_date": new_result.get("deadline_date"),
+                "raw_phrase": new_result.get("raw_phrase"),
+            },
+        }
+        if message_id:
+            record["message_id"] = message_id
+        DEADLINE_SHADOW_LOG_PATH.parent.mkdir(parents=True, exist_ok=True)
+        with DEADLINE_SHADOW_LOG_PATH.open("a", encoding="utf-8") as stream:
+            stream.write(json.dumps(record, ensure_ascii=False, default=str) + "\n")
+    except Exception:
+        log.warning("Could not append deadline shadow record", exc_info=True)
+    return result
 
 
 # ============================================================
@@ -36,7 +85,7 @@ def classify(email_text: str) -> str:
 @tool
 def detect_deadline(email_text: str) -> str:
     """Detect whether the email contains a deadline and extract deadline information."""
-    result = _detect_deadline(email_text)
+    result = _deadline_with_shadow(email_text)
     return json.dumps(result, default=str)
 
 
@@ -51,7 +100,7 @@ def extract_tasks(email_text: str) -> str:
 def assess_priority(email_text: str) -> str:
     """Assess the priority of the email using urgency and deadline information."""
     urgency = has_urgency_words(email_text)
-    deadline = _detect_deadline(email_text)
+    deadline = _deadline_with_shadow(email_text)
     priority = compute_priority(urgency, deadline)
 
     return json.dumps(
