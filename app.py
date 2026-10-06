@@ -127,6 +127,7 @@ def process_inbox(fetcher=None, security=None,
         from gmail.fetch import fetch_inbox_emails as fetcher
     if security is None:
         from agents.security.agent import run_security_agent as security
+    use_production_understanding = understanding is None
     if understanding is None:
         from agents.understanding.runner import understand_email as understanding
     _initialize_processed_db(processed_db)
@@ -174,7 +175,14 @@ def process_inbox(fetcher=None, security=None,
             results.append(outcome)
             continue
         if route not in {"flagged_skip_reply_generation", "low_priority_skip_downstream"}:
-            understood = understanding(text)
+            if use_production_understanding:
+                understood = understanding(
+                    text,
+                    received_at=email.get("received_at"),
+                    message_id=email.get("message_id"),
+                )
+            else:
+                understood = understanding(text)
             outcome["understanding"] = understood
             if route == "clean_full_pipeline":
                 if drafter:

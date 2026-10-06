@@ -1,8 +1,14 @@
 # agents/understanding/prioritizer.py
 from datetime import date, datetime
 from dateutil import parser as dateutil_parser
+import logging
+import os
 import spacy
 import re
+
+from agents.understanding.deadline_detector import detect_deadline_v2
+
+log = logging.getLogger(__name__)
 
 # Loaded once at import time — same pattern as screening.py loading the spam model once.
 nlp = spacy.load("en_core_web_sm")
@@ -19,7 +25,7 @@ def has_urgency_words(text: str) -> bool:
     return any(keyword in lowered for keyword in URGENCY_KEYWORDS)
 
 
-def detect_deadline(text: str) -> dict:
+def detect_deadline_legacy(text: str) -> dict:
     """
     Detect deadline information in email text using spaCy NLP and dateutil parsing.
     
@@ -105,6 +111,33 @@ def detect_deadline(text: str) -> dict:
     }
 
 
+def _received_at_is_aware(received_at) -> bool:
+    if isinstance(received_at, datetime):
+        try:
+            return received_at.tzinfo is not None and received_at.utcoffset() is not None
+        except (TypeError, ValueError, OverflowError):
+            return False
+    if isinstance(received_at, str) and received_at.strip():
+        try:
+            value = datetime.fromisoformat(received_at.strip().replace("Z", "+00:00"))
+        except ValueError:
+            return False
+        return value.tzinfo is not None and value.utcoffset() is not None
+    return False
+
+
+# TODO(REAL-eval): v2 evaluated on synthetic cases only. Validate on real
+# labeled emails (logs/deadline_shadow.jsonl) before treating as final.
+def detect_deadline(text: str, received_at=None) -> dict:
+    """Detect a deadline using v2 only when a valid received timestamp is supplied."""
+    if os.environ.get("AGENTMAIL_DEADLINE_DETECTOR") == "legacy":
+        return detect_deadline_legacy(text)
+    if not _received_at_is_aware(received_at):
+        log.warning("Skipping v2 deadline detection: missing, invalid, or timezone-naive received_at")
+        return {"has_deadline": False, "deadline_date": None, "raw_phrase": None}
+    return detect_deadline_v2(text, received_at)
+
+
 def extract_deadline_phrase(text: str, span_start: int, span_end: int, patterns: list) -> str:
     """Extract the deadline phrase that contains or is near the detected date."""
     # Search for deadline patterns near the date span
@@ -180,7 +213,7 @@ if __name__ == "__main__":
     
     for i, example in enumerate(examples, 1):
         has_urgency = has_urgency_words(example)
-        deadline_info = detect_deadline(example)
+        deadline_info = detect_deadline_legacy(example)
         priority = compute_priority(has_urgency, deadline_info)
         
         print(f"\nExample {i}: {example}")
