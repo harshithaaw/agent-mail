@@ -18,6 +18,7 @@ def test_runner_received_at_reaches_real_agent_tools_without_tool_arguments(monk
         return {"result": {"deadline": deadline, "priority": priority}}
 
     monkeypatch.setattr(runner, "understanding_agent", SimpleNamespace(invoke=invoke))
+    monkeypatch.setattr(runner, "classify_email", lambda text: "Academic")
     result = runner.understand_email(text, received_at=received_at, message_id="message-17")
 
     assert result["deadline"]["has_deadline"] is True
