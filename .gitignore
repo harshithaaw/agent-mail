@@ -65,3 +65,4 @@ docs/retrieval-quality-report.md
 agentmail-master-context.md
 data/datasets/combined_dataset.csv
 data/spamassassin/
+data/*.lock

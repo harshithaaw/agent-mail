@@ -71,6 +71,12 @@ After training, the model files will be created in the `models/` directory and t
 ## Setup with your own data
 
 - **Gmail Account & Credentials**: You need your own Gmail account and OAuth credentials. Credentials are never committed to the repository. Place your OAuth client secrets at `credentials/client_secret.json` (or under `credentials/`); the authorized token will be saved to `token.json`.
+- **Gmail Re-authentication**: If you see "Gmail login expired" or `invalid_grant` errors, delete the expired token and re-authenticate:
+  ```bash
+  rm token.json
+  python -m gmail.auth
+  ```
+  This will open a browser window for you to sign in again and generate a fresh token.
 - **Local Chroma Vector Database**: The repository contains synthetic fixture data only. No vector database ships with the repo. Chroma is built locally from your own Gmail sent emails by running `python -m scripts.ingest_sent_batch`.
 - **Training Data**: Training data is not included in the repository. You must download or supply the datasets yourself:
   - **Category CSV**: `data/datasets/combined_dataset.csv` (CSV format with required columns `text` and `label`; label values `Academic`, `Career`, `Personal`, `Promotional`). Users must supply their own labelled CSV in this format; download from public sources or verify the source and licence yourself.
