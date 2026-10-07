@@ -16,6 +16,7 @@ PAUSE_PATH = ROOT / "data" / "PAUSED"
 LOCK_PATH = ROOT / "data" / "run.lock"
 WORKER_STATUS_PATH = ROOT / "data" / "worker_status.json"
 CHROMA_PATH = ROOT / "chroma_db" / "chroma.sqlite3"
+REPLY_TRACE_PATH = ROOT / "logs" / "reply_trace.jsonl"
 
 
 def _open_readonly_db(db_path):
@@ -81,6 +82,43 @@ def _parse_counts(value):
         return parsed if isinstance(parsed, dict) else {}
     except (TypeError, json.JSONDecodeError):
         return {}
+
+
+def load_reply_trace(path=REPLY_TRACE_PATH, limit=20):
+    """Read the most recent reply traces and flatten them to one row per example."""
+    traces = []
+    try:
+        with Path(path).open(encoding="utf-8") as handle:
+            for line in handle:
+                try:
+                    record = json.loads(line)
+                except (TypeError, json.JSONDecodeError):
+                    continue
+                if isinstance(record, dict):
+                    traces.append(record)
+    except OSError:
+        return []
+
+    rows = []
+    count = max(0, limit)
+    for record in traces[-count:] if count else []:
+        examples = record.get("examples")
+        if not isinstance(examples, list):
+            continue
+        for example in examples:
+            if not isinstance(example, dict):
+                continue
+            rows.append({
+                "time": record.get("time", ""),
+                "email id": record.get("message_id", ""),
+                "switch": record.get("switch", "off"),
+                "rank": example.get("rank"),
+                "past-reply subject": example.get("subject", ""),
+                "distance": example.get("distance"),
+                "sent to this sender": "yes" if example.get("sent_to_sender") else "no",
+                "above 0.60": "yes" if example.get("above_threshold") else "no",
+            })
+    return rows
 
 
 def _parse_datetime(value):
@@ -260,6 +298,12 @@ def main():
         st.subheader("Last 50 processed emails")
         processed, runs = _format_dashboard_rows(data)
         st.dataframe(processed, use_container_width=True, hide_index=True)
+        st.subheader("Reply retrieval (last 20 drafts)")
+        reply_trace = load_reply_trace()
+        if reply_trace:
+            st.dataframe(reply_trace, use_container_width=True, hide_index=True)
+        else:
+            st.write("No reply traces yet")
         st.subheader("Last 10 runs")
         st.dataframe(runs, use_container_width=True, hide_index=True)
 
