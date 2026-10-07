@@ -29,6 +29,7 @@ enron_mail_20150507.tar.gz
 
 # ChromaDB
 chroma_db/
+chroma_synthetic/
 
 # Trash directory
 _trash/
