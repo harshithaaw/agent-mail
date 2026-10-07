@@ -21,6 +21,7 @@ emails.json
 logs/
 logs/deadline_shadow.jsonl
 data/processed.db
+data/contacts_real.csv
 data/worker_status.json
 
 # Enron mail data
