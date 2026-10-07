@@ -92,10 +92,17 @@ def add_examples(
     )
 
 
-def retrieve_similar(query_text: str, k: int = 3, source_filter: Optional[str | List[str]] = None, category: Optional[str] = None) -> List[Dict[str, Any]]:
+def retrieve_similar(
+    query_text: str,
+    k: int = 3,
+    source_filter: Optional[str | List[str]] = None,
+    category: Optional[str] = None,
+    person_addr: Optional[str] = None,
+    thread_id: Optional[str] = None,
+) -> List[Dict[str, Any]]:
     """
     Retrieve top-k most similar stored examples for a query email.
-    Flat retrieval only - no persona filtering.
+    Flat retrieval, optionally reranked for a matching correspondent/thread.
 
     Args:
         query_text: The query text to find similar examples for
@@ -104,6 +111,8 @@ def retrieve_similar(query_text: str, k: int = 3, source_filter: Optional[str | 
         category: Optional metadata filter on 'category' field (e.g. "Career", "Personal")
                  If provided and combined with source_filter, uses AND logic.
                  If category filter returns zero results, falls back to source_filter-only.
+        person_addr: Normalized correspondent address for optional person-aware reranking.
+        thread_id: Current Gmail thread ID for an optional thread-match bonus.
 
     Returns:
         List of dicts: {"id": str, "document": str, "metadata": dict, "distance": float}
@@ -176,7 +185,39 @@ def retrieve_similar(query_text: str, k: int = 3, source_filter: Optional[str | 
             "metadata": metadatas[i],
             "distance": distances[i],
         })
-    return out
+
+    if os.getenv("AGENTMAIL_PERSON_AWARE") != "1" or not person_addr:
+        return out
+
+    person_results = collection.query(
+        query_embeddings=[query_embedding],
+        n_results=3,
+        where={"$and": [
+            {"source": "gmail_sent"},
+            {"recipient_norm": person_addr},
+        ]},
+    )
+    person_ids = person_results.get("ids", [[]])[0]
+    person_documents = person_results.get("documents", [[]])[0]
+    person_metadatas = person_results.get("metadatas", [[]])[0]
+    person_distances = person_results.get("distances", [[]])[0]
+    by_id = {result["id"]: result for result in out}
+    for i, result_id in enumerate(person_ids):
+        by_id.setdefault(result_id, {
+            "id": result_id,
+            "document": person_documents[i],
+            "metadata": person_metadatas[i],
+            "distance": person_distances[i],
+        })
+
+    def adjusted_distance(result):
+        metadata = result.get("metadata") or {}
+        bonus = 0.05 if metadata.get("recipient_norm") == person_addr else 0.0
+        if thread_id and metadata.get("thread") == thread_id:
+            bonus += 0.05
+        return result["distance"] - bonus
+
+    return sorted(by_id.values(), key=adjusted_distance)[:k]
 
 
 def collection_count() -> int:

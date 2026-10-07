@@ -2,6 +2,8 @@
 """Evaluate current top-3 retrieval on one synthetic query split."""
 import argparse
 import json
+import os
+from email.utils import getaddresses
 from pathlib import Path
 
 from agents.reply.retriever import retrieve_context_raw
@@ -12,6 +14,11 @@ ROOT = Path(__file__).resolve().parents[1]
 QUERIES = ROOT / "data/synthetic/queries.jsonl"
 
 
+def _normalize_address(raw_address):
+    addresses = getaddresses([raw_address or ""])
+    return addresses[0][1].strip().lower() if addresses else ""
+
+
 def evaluate(queries_path=QUERIES, chroma_path=STORE, split="dev", *, retrieve=None, classify=None):
     if split not in ("dev", "test"):
         raise ValueError("split must be 'dev' or 'test'")
@@ -19,6 +26,7 @@ def evaluate(queries_path=QUERIES, chroma_path=STORE, split="dev", *, retrieve=N
     if classify is None:
         from agents.understanding.classifier import classify_email
         classify = classify_email
+    person_aware = os.getenv("AGENTMAIL_PERSON_AWARE") == "1"
     with Path(queries_path).open(encoding="utf-8") as source:
         queries = [json.loads(line) for line in source if line.strip()]
     selected = [q for q in queries if int(q["id"]) % 2 == (1 if split == "dev" else 0)]
@@ -27,7 +35,11 @@ def evaluate(queries_path=QUERIES, chroma_path=STORE, split="dev", *, retrieve=N
         for query in selected:
             text = f"{query.get('subject', '')}\n\n{query.get('body', '')}".strip()
             category = classify(text)
-            results = retrieve(text, k=3, source_filter=["gmail_sent"], category=category)
+            results = retrieve(
+                text, k=3, source_filter=["gmail_sent"], category=category,
+                person_addr=_normalize_address(query.get("sender")) if person_aware else None,
+                thread_id=query.get("thread_id") if person_aware else None,
+            )
             retrieved = [result["id"] for result in results]
             gold = query.get("gold_message_ids", [])
             hits = [i for i, result_id in enumerate(retrieved, 1) if result_id.removeprefix("gmail_sent_") in gold]

@@ -75,7 +75,11 @@ def create_gmail_draft(
         reply_result = {"draft": generated_reply, "stopped_reason": "provided_by_pipeline"}
     else:
         try:
-            reply_result = run_reply_agent(email_text, agent_output)
+            reply_result = run_reply_agent(
+                email_text, agent_output,
+                sender_email=sender_email,
+                thread_id=email.get("thread_id"),
+            )
         except Exception as e:
             return {
                 "draft_id": None,
