@@ -99,6 +99,8 @@ def retrieve_similar(
     category: Optional[str] = None,
     person_addr: Optional[str] = None,
     thread_id: Optional[str] = None,
+    collection=None,
+    embed=None,
 ) -> List[Dict[str, Any]]:
     """
     Retrieve top-k most similar stored examples for a query email.
@@ -117,8 +119,9 @@ def retrieve_similar(
     Returns:
         List of dicts: {"id": str, "document": str, "metadata": dict, "distance": float}
     """
-    collection = get_or_create_collection()
-    query_embedding = embed_text(query_text)
+    collection = get_or_create_collection() if collection is None else collection
+    embed_fn = embed_text if embed is None else embed
+    query_embedding = embed_fn(query_text)
 
     # Build query parameters
     query_params = {
