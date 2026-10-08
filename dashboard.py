@@ -85,7 +85,7 @@ def _parse_counts(value):
 
 
 def load_reply_trace(path=REPLY_TRACE_PATH, limit=20):
-    """Read the most recent reply traces and flatten them to one row per example."""
+    """Read recent traces, grouped by incoming message, newest first."""
     traces = []
     try:
         with Path(path).open(encoding="utf-8") as handle:
@@ -99,26 +99,34 @@ def load_reply_trace(path=REPLY_TRACE_PATH, limit=20):
     except OSError:
         return []
 
-    rows = []
-    count = max(0, limit)
-    for record in traces[-count:] if count else []:
+    emails = []
+    for record in traces:
         examples = record.get("examples")
         if not isinstance(examples, list):
             continue
+        switch = "on" if record.get("switch") == "on" else "off"
+        rows = []
         for example in examples:
             if not isinstance(example, dict):
                 continue
             rows.append({
-                "time": record.get("time", ""),
-                "email id": record.get("message_id", ""),
-                "switch": record.get("switch", "off"),
                 "rank": example.get("rank"),
                 "past-reply subject": example.get("subject", ""),
                 "distance": example.get("distance"),
                 "sent to this sender": "yes" if example.get("sent_to_sender") else "no",
-                "above 0.60": "yes" if example.get("above_threshold") else "no",
             })
-    return rows
+        emails.append({
+            "time": record.get("time", ""),
+            "email id": record.get("message_id", ""),
+            "switch": switch,
+            "examples used": len(rows),
+            "threshold label": "dropped from the prompt" if switch == "on" else "weak, still used",
+            "threshold count": sum(bool(ex.get("above_threshold")) for ex in examples if isinstance(ex, dict)),
+            "sent count": sum(bool(ex.get("sent_to_sender")) for ex in examples if isinstance(ex, dict)),
+            "examples": rows,
+        })
+    # A message can have only one trace record; reverse file order is newest first.
+    return list(reversed(emails))[:max(0, limit)]
 
 
 def _parse_datetime(value):
@@ -298,10 +306,18 @@ def main():
         st.subheader("Last 50 processed emails")
         processed, runs = _format_dashboard_rows(data)
         st.dataframe(processed, use_container_width=True, hide_index=True)
-        st.subheader("Reply retrieval (last 20 drafts)")
-        reply_trace = load_reply_trace()
+        st.subheader("Reply retrieval (last 10 emails)")
+        reply_trace = load_reply_trace(limit=10)
         if reply_trace:
-            st.dataframe(reply_trace, use_container_width=True, hide_index=True)
+            for email in reply_trace:
+                timestamp = format_local_timestamp(email["time"]) if email["time"] else ""
+                st.write(
+                    f"{timestamp} · {email['email id']} · switch {email['switch']} · "
+                    f"{email['examples used']} examples used · {email['threshold count']} "
+                    f"{email['threshold label']} · {email['sent count']} sent to this sender"
+                )
+                with st.expander(f"Examples for {email['email id']}"):
+                    st.dataframe(email["examples"], use_container_width=True, hide_index=True)
         else:
             st.write("No reply traces yet")
         st.subheader("Last 10 runs")
