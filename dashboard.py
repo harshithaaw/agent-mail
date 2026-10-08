@@ -218,6 +218,30 @@ def _format_dashboard_rows(data, now=None):
     return emails, runs
 
 
+def _processed_display_rows(rows):
+    status_labels = {
+        "draft_created": "✅ Draft",
+        "skipped_automated_sender": "⏭️ Skipped",
+        "low_priority_skip_downstream": "⏭️ Skipped",
+        "generation_failed": "❌ Failed",
+        "draft_failed": "❌ Failed",
+    }
+    return [
+        {"Time": row["time"], "From": row["sender"], "Subject": row["subject"],
+         "Route": row["route"], "Status": status_labels.get(row["status"], row["status"])}
+        for row in rows
+    ]
+
+
+def _reply_example_display_rows(rows):
+    return [
+        {"Rank": row["rank"], "Past reply": row["past-reply subject"],
+         "Distance": row["distance"],
+         "Sent to this sender": "✓" if row["sent to this sender"] == "yes" else "—"}
+        for row in rows
+    ]
+
+
 def load_chroma_count(chroma_path=CHROMA_PATH, collection_name="email_memory"):
     """Count existing collection embeddings through a read-only SQLite connection."""
     if not Path(chroma_path).exists():
@@ -265,12 +289,13 @@ def main():
     @st.fragment(run_every="30s")
     def dashboard():
         status = get_ui_status()
-        st.subheader(f"Status: {status}")
+        st.caption(f"Status: {status}")
         worker_message = worker_status_message()
         if worker_message.startswith("Worker not running:"):
-            st.warning(worker_message)
+            st.warning(worker_message, icon="⚠️")
         else:
             st.caption(worker_message)
+        st.caption("Run once now or pause automatic checks.")
         left, right = st.columns(2)
         if left.button("Run now", disabled=LOCK_PATH.exists(), use_container_width=True):
             launch_worker()
@@ -286,14 +311,20 @@ def main():
 
         data = load_dashboard_data()
         run = data["last_run"]
-        st.subheader("Last run")
-        if run:
-            run_time = run["finished_at"] or run["started_at"]
-            st.write({"time": format_local_timestamp(run_time), "status": run["status"], "reason": display_run_reason(run)})
-            if "gmail_login_expired" in str(run["reason"] or ""):
-                st.error("Gmail login expired, sign in again")
-        else:
-            st.write("No runs recorded")
+        st.divider()
+        with st.container(border=True):
+            st.caption("Last run")
+            if run:
+                run_time = run["finished_at"] or run["started_at"]
+                reason = display_run_reason(run)
+                st.write(
+                    f"{format_local_timestamp(run_time)} · {run['status']} · "
+                    f"{str(reason)[:100]}"
+                )
+                if "gmail_login_expired" in str(run["reason"] or ""):
+                    st.error("Gmail login expired, sign in again")
+            else:
+                st.write("No runs recorded")
 
         st.subheader("Today's counters")
         cols = st.columns(4)
@@ -301,27 +332,41 @@ def main():
         for col, (label, key) in zip(cols, labels):
             col.metric(label, data["counters"][key])
         chroma_count = load_chroma_count()
-        st.caption(f"Chroma email_memory records: {chroma_count if chroma_count is not None else 'unavailable'}")
+        st.caption(f"Chroma records: {chroma_count if chroma_count is not None else 'unavailable'}")
 
+        st.divider()
         st.subheader("Last 50 processed emails")
+        st.caption("Most recently processed messages")
         processed, runs = _format_dashboard_rows(data)
-        st.dataframe(processed, use_container_width=True, hide_index=True)
+        processed_display = _processed_display_rows(processed)
+        st.dataframe(processed_display, use_container_width=True, hide_index=True)
+
+        st.divider()
         st.subheader("Reply retrieval (last 10 emails)")
         reply_trace = load_reply_trace(limit=10)
         if reply_trace:
             for email in reply_trace:
                 timestamp = format_local_timestamp(email["time"]) if email["time"] else ""
                 st.write(
-                    f"{timestamp} · {email['email id']} · switch {email['switch']} · "
-                    f"{email['examples used']} examples used · {email['threshold count']} "
-                    f"{email['threshold label']} · {email['sent count']} sent to this sender"
+                    f"{timestamp} · switch {email['switch']} · {email['examples used']} used · "
+                    f"{email['threshold count']} {email['threshold label']} · "
+                    f"{email['sent count']} to sender"
                 )
+                st.caption(f"Internal email id: {email['email id']}")
                 with st.expander(f"Examples for {email['email id']}"):
-                    st.dataframe(email["examples"], use_container_width=True, hide_index=True)
+                    examples = _reply_example_display_rows(email["examples"])
+                    st.dataframe(
+                        examples, use_container_width=True, hide_index=True,
+                        column_config={
+                            "Distance": st.column_config.NumberColumn(
+                                "Distance (lower = more similar)", format="%.3f"
+                            )
+                        },
+                    )
         else:
             st.write("No reply traces yet")
-        st.subheader("Last 10 runs")
-        st.dataframe(runs, use_container_width=True, hide_index=True)
+        with st.expander("Last 10 runs"):
+            st.dataframe(runs, use_container_width=True, hide_index=True)
 
     dashboard()
 

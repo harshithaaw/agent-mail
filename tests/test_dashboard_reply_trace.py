@@ -4,7 +4,11 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from dashboard import load_reply_trace
+from dashboard import (
+    _processed_display_rows,
+    _reply_example_display_rows,
+    load_reply_trace,
+)
 
 
 def _record(message_id, time, switch, examples):
@@ -71,3 +75,43 @@ def test_reply_trace_limits_number_of_emails(tmp_path):
 
 def test_reply_trace_handles_missing_file(tmp_path):
     assert load_reply_trace(tmp_path / "missing.jsonl") == []
+
+
+def test_reply_trace_display_rows_use_short_labels_without_changing_trace_data():
+    example = {
+        "rank": 1,
+        "past-reply subject": "Past reply 1",
+        "distance": 0.59123,
+        "sent to this sender": "yes",
+    }
+    displayed = _reply_example_display_rows([example])
+
+    assert displayed == [{
+        "Rank": 1,
+        "Past reply": "Past reply 1",
+        "Distance": 0.59123,
+        "Sent to this sender": "✓",
+    }]
+    assert example["distance"] == 0.59123
+    assert _reply_example_display_rows([{**example, "sent to this sender": "no"}])[0][
+        "Sent to this sender"
+    ] == "—"
+
+
+def test_processed_display_rows_shorten_headers_and_status():
+    row = {
+        "time": "10:00 AM",
+        "sender": "sender@example.com",
+        "subject": "Hello",
+        "route": "draft",
+        "status": "draft_created",
+    }
+
+    assert _processed_display_rows([row]) == [{
+        "Time": "10:00 AM",
+        "From": "sender@example.com",
+        "Subject": "Hello",
+        "Route": "draft",
+        "Status": "✅ Draft",
+    }]
+    assert row["status"] == "draft_created"
