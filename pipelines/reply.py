@@ -1,5 +1,6 @@
 """Pipeline A Reply Agent: category-filtered semantic retrieval + grounded draft."""
 import logging
+import os
 from agents.understanding.categories import CATEGORIES
 
 log = logging.getLogger(__name__)
@@ -31,14 +32,51 @@ def generate_grounded_draft(email, examples, generate=None):
 
 def reply_to_email(email, understanding, collection, embed, generate=None, k=3):
     query_text = f"Subject: {email.get('subject', '')}\n\n{email.get('body', '')}"
-    examples = retrieve_examples(query_text, understanding["category"], collection, embed, k)
+    examples = None
+    person_aware_used = False
+    if os.getenv("AGENTMAIL_PERSON_AWARE") == "1":
+        sender = email.get("sender_email")
+        thread_id = email.get("thread_id")
+        if sender or thread_id:
+            try:
+                from agents.reply.agent import _normalize_address
+                from rag.retrieve import retrieve_similar
+
+                examples = retrieve_similar(
+                    query_text,
+                    k=k,
+                    source_filter=["gmail_sent"],
+                    category=understanding["category"],
+                    person_addr=_normalize_address(sender) or None,
+                    thread_id=thread_id or None,
+                    collection=collection,
+                    embed=embed,
+                )
+                person_aware_used = True
+            except Exception:
+                log.warning("Person-aware retrieval failed; falling back to category retrieval")
+    if examples is None:
+        examples = retrieve_examples(query_text, understanding["category"], collection, embed, k)
+    if person_aware_used:
+        from agents.reply.context import validate_context
+
+        validation = validate_context(examples)
+        draft_examples = validation["usable_examples"]
+    else:
+        draft_examples = examples
+    distances = [
+        example["distance"] for example in examples
+        if isinstance(example, dict) and isinstance(example.get("distance"), (int, float))
+    ]
+    best_distance = min(distances) if distances else None
+    log.info("reply retrieval retrieved=%d usable=%d best_distance=%s", len(examples), len(draft_examples), best_distance)
     sender_name = email.get("sender_name", "")
     email_text = (
         f"Sender: {sender_name} <{email.get('sender_email', '')}>\n"
         f"Subject: {email.get('subject', '')}\n\n{email.get('body', '')}"
     )
     # Boundary evidence is available to callers in result, and logged by app.
-    draft = generate_grounded_draft(email, examples, generate) if generate else _generate_with_context(email_text, {**understanding, "sender_name": sender_name, "sender_email": email.get("sender_email", "")}, examples)
+    draft = generate_grounded_draft(email, draft_examples, generate) if generate else _generate_with_context(email_text, {**understanding, "sender_name": sender_name, "sender_email": email.get("sender_email", "")}, draft_examples)
     return {"draft": draft, "retrieved": examples, "category": understanding["category"]}
 
 

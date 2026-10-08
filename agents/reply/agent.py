@@ -33,6 +33,7 @@ job -- that's gate.py, called once by the caller before run_reply_agent().
 """
 import os
 import re
+from email.utils import getaddresses
 from typing import TypedDict, Optional, List, Dict, Any
 
 from langgraph.graph import StateGraph, END
@@ -52,6 +53,11 @@ MAX_RETRIEVAL_ATTEMPTS = 2  # initial attempt + one retry, matching k=3 then k=6
 _THINK_RE = re.compile(r"<think>.*?</think>", re.DOTALL | re.IGNORECASE)
 
 
+def _normalize_address(raw_address: Optional[str]) -> str:
+    addresses = getaddresses([raw_address or ""])
+    return addresses[0][1].strip().lower() if addresses else ""
+
+
 def _strip_think(text: str) -> str:
     if not text:
         return text
@@ -67,6 +73,8 @@ _decision_llm = ChatOllama(model=MODEL_NAME, temperature=0.0)
 class ReplyState(TypedDict):
     email_text: str
     agent_output: Dict[str, Any]
+    sender_email: Optional[str]
+    thread_id: Optional[str]
     need_retrieval: Optional[bool]
     retrieval_query: Optional[str]
     retrieval_k: int
@@ -110,7 +118,12 @@ def _retrieve_node(state: ReplyState) -> dict:
     # Only the user's own sent mail (gmail_sent). Synthetic fixture data
     # and Enron are excluded.
     rag_sources = ["gmail_sent"]
-    results = retrieve_context_raw(query, k=k, source_filter=rag_sources, category=category)
+    person_addr = _normalize_address(state.get("sender_email"))
+    thread_id = state.get("thread_id")
+    results = retrieve_context_raw(
+        query, k=k, source_filter=rag_sources, category=category,
+        person_addr=person_addr or None, thread_id=thread_id,
+    )
 
     return {
         "retrieved_examples": results,
@@ -122,6 +135,8 @@ def _retrieve_node(state: ReplyState) -> dict:
             "k": k,
             "source_filter": rag_sources,
             "category": category,
+            "person_addr": person_addr or None,
+            "thread_id": thread_id,
             "result_count": len(results),
             "distances": [r.get("distance") for r in results if isinstance(r, dict)],
         }],
@@ -221,7 +236,12 @@ _graph.add_edge("assemble", END)
 reply_graph = _graph.compile()
 
 
-def run_reply_agent(email_text: str, agent_output: Dict[str, Any]) -> Dict[str, Any]:
+def run_reply_agent(
+    email_text: str,
+    agent_output: Dict[str, Any],
+    sender_email: Optional[str] = None,
+    thread_id: Optional[str] = None,
+) -> Dict[str, Any]:
     """
     Run the Reply Agent for one already-gate-approved email.
 
@@ -241,6 +261,8 @@ def run_reply_agent(email_text: str, agent_output: Dict[str, Any]) -> Dict[str, 
     init_state: ReplyState = {
         "email_text": email_text,
         "agent_output": agent_output,
+        "sender_email": sender_email,
+        "thread_id": thread_id,
         "need_retrieval": None,
         "retrieval_query": None,
         "retrieval_k": INITIAL_K,
@@ -301,7 +323,11 @@ if __name__ == "__main__":
         })
         agent_output = understanding_result["result"]
 
-        result = run_reply_agent(email_text, agent_output)
+        result = run_reply_agent(
+            email_text, agent_output,
+            sender_email=sender_email,
+            thread_id=email.get("thread_id"),
+        )
 
         print(f"    stopped_reason: {result['stopped_reason']}")
         print(f"    trace: {result['trace']}")

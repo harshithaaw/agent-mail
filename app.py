@@ -214,6 +214,11 @@ def process_inbox(fetcher=None, security=None,
                         active_collection = collection
                     try:
                         reply = reply_to_email(email, understood, active_collection, embed)
+                        try:
+                            from agents.reply.trace_log import write_reply_trace
+                            write_reply_trace(email, reply)
+                        except Exception:
+                            pass
                     except Exception as exc:
                         outcome["status"] = "generation_failed"
                         outcome["generation_error"] = str(exc)

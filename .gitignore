@@ -20,7 +20,10 @@ __pycache__/
 emails.json
 logs/
 logs/deadline_shadow.jsonl
+logs/reply_trace.jsonl
+chroma_db.bak*/
 data/processed.db
+data/contacts_real.csv
 data/worker_status.json
 
 # Enron mail data
@@ -29,6 +32,7 @@ enron_mail_20150507.tar.gz
 
 # ChromaDB
 chroma_db/
+chroma_synthetic/
 
 # Trash directory
 _trash/

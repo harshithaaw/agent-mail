@@ -1,12 +1,19 @@
 """Pipeline B: sent fixtures/Gmail boundary -> shared understanding -> Chroma."""
 from __future__ import annotations
 import logging
+from email.utils import getaddresses
 from typing import Callable
 
 from agents.understanding.categories import CATEGORIES
 from agents.understanding.classifier import classify_email
 
 log = logging.getLogger(__name__)
+
+
+def _first_recipient_norm(raw_recipients: str) -> str:
+    """Return the first parsed recipient address in normalized form."""
+    addresses = getaddresses([raw_recipients or ""])
+    return addresses[0][1].strip().lower() if addresses else ""
 
 
 def ingest_sent_batch(emails, collection, embed: Callable | None = None, understand: Callable = None):
@@ -30,6 +37,7 @@ def ingest_sent_batch(emails, collection, embed: Callable | None = None, underst
             "sender": str(e.get("sender_email", "")),
             "date": str(e.get("timestamp", "")),
             "thread": str(e.get("thread_id", "")),
+            "recipient_norm": _first_recipient_norm(e.get("recipient", "")),
             "source": "gmail_sent",
         }
         current = collection.get(ids=[chroma_id], include=["documents", "metadatas"])
@@ -54,6 +62,7 @@ def ingest_sent_batch(emails, collection, embed: Callable | None = None, underst
             "sender": e.get("sender_email", ""),
             "date": e.get("timestamp", ""),
             "thread": e.get("thread_id", ""),
+            "recipient_norm": _first_recipient_norm(e.get("recipient", "")),
             "source": "gmail_sent",
         }
         vector = embed(text)

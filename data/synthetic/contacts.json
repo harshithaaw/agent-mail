@@ -1,0 +1,52 @@
+[
+  {
+    "email": "ananya.sharma@iiit-hyd-test.example",
+    "display_name": "Prof. Ananya Sharma",
+    "persona": "professional"
+  },
+  {
+    "email": "v.reddy@hyd-tech-labs.example",
+    "display_name": "Vikramaditya Reddy",
+    "persona": "professional"
+  },
+  {
+    "email": "siddharth.mehta@nexus-recruiting-test.example",
+    "display_name": "Siddharth Mehta",
+    "persona": "professional"
+  },
+  {
+    "email": "ks.rao@iiit-hyd-test.example",
+    "display_name": "Dr. K. S. Rao",
+    "persona": "professional"
+  },
+  {
+    "email": "meera.iyer@fintech-innovations-test.example",
+    "display_name": "Meera Iyer",
+    "persona": "professional"
+  },
+  {
+    "email": "aarav.patel@gmail-test.example",
+    "display_name": "Aarav Patel",
+    "persona": "personal"
+  },
+  {
+    "email": "diya.nair@family-test.example",
+    "display_name": "Diya Nair",
+    "persona": "personal"
+  },
+  {
+    "email": "tanvi.k@artspace-test.example",
+    "display_name": "Tanvi Kapoor",
+    "persona": "personal"
+  },
+  {
+    "email": "kabir.v@bookclub-test.example",
+    "display_name": "Kabir Verma",
+    "persona": "personal"
+  },
+  {
+    "email": "sanjay.nair@family-test.example",
+    "display_name": "Sanjay Nair",
+    "persona": "personal"
+  }
+]

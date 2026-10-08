@@ -49,13 +49,23 @@ Each module has a single, well-defined responsibility:
 |- Generate: Draft production (LLM with context)
 """
 
-from .gate import should_generate_reply, is_automated_sender
-from .retriever import retrieve_context
-from .agent import run_reply_agent
-
 __all__ = [
     'should_generate_reply',
     'is_automated_sender',
     'retrieve_context',
     'run_reply_agent',
 ]
+
+
+def __getattr__(name):
+    """Load public components on demand, avoiding model setup for utilities."""
+    if name in {'should_generate_reply', 'is_automated_sender'}:
+        from . import gate
+        return getattr(gate, name)
+    if name == 'retrieve_context':
+        from .retriever import retrieve_context
+        return retrieve_context
+    if name == 'run_reply_agent':
+        from .agent import run_reply_agent
+        return run_reply_agent
+    raise AttributeError(f"module {__name__!r} has no attribute {name!r}")

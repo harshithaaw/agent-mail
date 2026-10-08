@@ -19,7 +19,14 @@ from langchain_core.tools import tool
 from rag.retrieve import retrieve_similar
 
 
-def retrieve_context_raw(query: str, k: int = 3, source_filter: Optional[str | List[str]] = None, category: Optional[str] = None) -> List[Dict[str, Any]]:
+def retrieve_context_raw(
+    query: str,
+    k: int = 3,
+    source_filter: Optional[str | List[str]] = None,
+    category: Optional[str] = None,
+    person_addr: Optional[str] = None,
+    thread_id: Optional[str] = None,
+) -> List[Dict[str, Any]]:
     """
     Retrieve up to k similar past emails from the RAG store.
 
@@ -29,6 +36,8 @@ def retrieve_context_raw(query: str, k: int = 3, source_filter: Optional[str | L
         source_filter: Optional metadata filter on 'source' field (a string or
             list of accepted source values, e.g. ["gmail_sent", "real_user"])
         category: Optional metadata filter on 'category' field (e.g. "Career", "Personal")
+        person_addr: Optional normalized correspondent address.
+        thread_id: Optional current thread ID for reranking.
 
     Returns a list of dicts with 'id', 'document', 'metadata', 'distance'
     (lower distance = more similar). Returns [] on any failure rather than
@@ -37,15 +46,28 @@ def retrieve_context_raw(query: str, k: int = 3, source_filter: Optional[str | L
     fallback path (generate without context) takes over.
     """
     try:
-        return retrieve_similar(query, k=k, source_filter=source_filter, category=category)
+        return retrieve_similar(
+            query, k=k, source_filter=source_filter, category=category,
+            person_addr=person_addr, thread_id=thread_id,
+        )
     except Exception as e:
         print(f"[retriever] retrieval failed for query={query!r}: {e}")
         return []
 
 
 @tool
-def retrieve_context(query: str, k: int = 3, source_filter: Optional[str | List[str]] = None, category: Optional[str] = None) -> List[Dict[str, Any]]:
+def retrieve_context(
+    query: str,
+    k: int = 3,
+    source_filter: Optional[str | List[str]] = None,
+    category: Optional[str] = None,
+    person_addr: Optional[str] = None,
+    thread_id: Optional[str] = None,
+) -> List[Dict[str, Any]]:
     """Retrieve up to k similar past emails from the RAG store, for tone
     and structure reference only. Each result has 'id', 'document', and
     'distance' (lower = more similar)."""
-    return retrieve_context_raw(query, k=k, source_filter=source_filter, category=category)
+    return retrieve_context_raw(
+        query, k=k, source_filter=source_filter, category=category,
+        person_addr=person_addr, thread_id=thread_id,
+    )
