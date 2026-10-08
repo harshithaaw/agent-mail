@@ -4,7 +4,33 @@ Person-aware retrieval uses the incoming sender and thread to favor relevant sen
 
 ## DEV and TEST
 
-The checked-in evaluation script defines separate DEV and TEST splits, but no saved person-aware DEV/TEST output is present. The master context file contains an older, non-person-aware 8-query threshold check: 6/8 queries had sufficient examples (75%), with 11 usable examples total. These figures are legacy context, not person-aware DEV or TEST results.
+These results are from 12 synthetic DEV queries (1 to 2 per query type), so this is a small check.
+
+### Switch off
+
+| query_type | n | Recall@3 | MRR |
+|---|---:|---:|---:|
+| address_variant | 1 | 0.0000 | 0.0000 |
+| cc_multi | 2 | 0.5000 | 0.5000 |
+| new_sender | 2 | 0.0000 | 0.0000 |
+| same_person_other_topic | 2 | 0.5000 | 0.5000 |
+| same_person_same_topic | 2 | 0.5000 | 0.5000 |
+| same_topic_tiebreak | 2 | 1.0000 | 1.0000 |
+| thread_continuation | 1 | 1.0000 | 1.0000 |
+
+### Switch on
+
+| query_type | n | Recall@3 | MRR |
+|---|---:|---:|---:|
+| address_variant | 1 | 0.0000 | 0.0000 |
+| cc_multi | 2 | 1.0000 | 1.0000 |
+| new_sender | 2 | 0.0000 | 0.0000 |
+| same_person_other_topic | 2 | 1.0000 | 1.0000 |
+| same_person_same_topic | 2 | 1.0000 | 1.0000 |
+| same_topic_tiebreak | 2 | 1.0000 | 1.0000 |
+| thread_continuation | 1 | 1.0000 | 1.0000 |
+
+`new_sender` is 0 by design. `address_variant` is a known limitation (n=1).
 
 ## Threshold sweep
 
