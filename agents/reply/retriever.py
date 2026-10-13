@@ -26,6 +26,8 @@ def retrieve_context_raw(
     category: Optional[str] = None,
     person_addr: Optional[str] = None,
     thread_id: Optional[str] = None,
+    collection=None,
+    embed=None,
 ) -> List[Dict[str, Any]]:
     """
     Retrieve up to k similar past emails from the RAG store.
@@ -49,6 +51,7 @@ def retrieve_context_raw(
         return retrieve_similar(
             query, k=k, source_filter=source_filter, category=category,
             person_addr=person_addr, thread_id=thread_id,
+            collection=collection, embed=embed,
         )
     except Exception as e:
         print(f"[retriever] retrieval failed for query={query!r}: {e}")

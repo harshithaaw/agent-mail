@@ -32,6 +32,46 @@ def generate_grounded_draft(email, examples, generate=None):
 
 def reply_to_email(email, understanding, collection, embed, generate=None, k=3):
     query_text = f"Subject: {email.get('subject', '')}\n\n{email.get('body', '')}"
+    if os.getenv("AGENTMAIL_REPLY_AGENT") == "1":
+        sender_name = email.get("sender_name", "")
+        sender_email = email.get("sender_email", "")
+        email_text = (
+            f"Sender: {sender_name} <{sender_email}>\n"
+            f"Subject: {email.get('subject', '')}\n\n{email.get('body', '')}"
+        )
+        agent_output = {
+            **understanding,
+            "sender_name": sender_name,
+            "sender_email": sender_email,
+        }
+        try:
+            # Keep this import inside the switch branch: the default worker
+            # path must not initialize the Reply Agent graph or Ollama client.
+            from agents.reply.agent import run_reply_agent
+
+            result = run_reply_agent(
+                email_text,
+                agent_output,
+                sender_email=sender_email,
+                thread_id=email.get("thread_id"),
+                collection=collection,
+                embed=embed,
+            )
+            if result and result.get("draft"):
+                log.info("reply generation path=agent")
+                reply = {
+                    "draft": result["draft"],
+                    "retrieved": result.get("retrieved_examples", []),
+                    "category": understanding["category"],
+                }
+                if result.get("validation") is not None:
+                    reply["validation"] = result["validation"]
+                return reply
+            log.warning("Reply Agent returned an empty draft; falling back to thin reply path")
+        except Exception:
+            log.warning("Reply Agent failed; falling back to thin reply path", exc_info=True)
+    else:
+        log.info("reply generation path=thin")
     examples = None
     person_aware_used = False
     if os.getenv("AGENTMAIL_PERSON_AWARE") == "1":

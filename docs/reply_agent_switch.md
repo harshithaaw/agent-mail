@@ -1,0 +1,9 @@
+# Reply Agent live path
+
+Set `AGENTMAIL_REPLY_AGENT=1` in the worker environment to route reply generation through `agents/reply/agent.py`.
+
+The default is off. With the switch enabled, the graph receives the same sender and thread information plus the worker's collection and embedding function. It returns the same `draft`, `retrieved`, and `category` fields as the thin path, with validation details when available.
+
+If the agent raises an error or returns an empty draft, the worker logs a warning and uses the existing thin path.
+
+The reply gate, Gmail draft creation, trace row fields, thin retrieval behavior, and person-aware retrieval switch are unchanged. The Reply Agent's retrieval source remains `gmail_sent` and its existing context validation remains in effect.
