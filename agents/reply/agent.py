@@ -75,6 +75,8 @@ class ReplyState(TypedDict):
     agent_output: Dict[str, Any]
     sender_email: Optional[str]
     thread_id: Optional[str]
+    collection: Any
+    embed: Any
     need_retrieval: Optional[bool]
     retrieval_query: Optional[str]
     retrieval_k: int
@@ -123,6 +125,7 @@ def _retrieve_node(state: ReplyState) -> dict:
     results = retrieve_context_raw(
         query, k=k, source_filter=rag_sources, category=category,
         person_addr=person_addr or None, thread_id=thread_id,
+        collection=state.get("collection"), embed=state.get("embed"),
     )
 
     return {
@@ -241,6 +244,8 @@ def run_reply_agent(
     agent_output: Dict[str, Any],
     sender_email: Optional[str] = None,
     thread_id: Optional[str] = None,
+    collection=None,
+    embed=None,
 ) -> Dict[str, Any]:
     """
     Run the Reply Agent for one already-gate-approved email.
@@ -263,6 +268,8 @@ def run_reply_agent(
         "agent_output": agent_output,
         "sender_email": sender_email,
         "thread_id": thread_id,
+        "collection": collection,
+        "embed": embed,
         "need_retrieval": None,
         "retrieval_query": None,
         "retrieval_k": INITIAL_K,
