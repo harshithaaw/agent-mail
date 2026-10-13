@@ -115,7 +115,7 @@ def load_reply_trace(path=REPLY_TRACE_PATH, limit=20):
                 "distance": example.get("distance"),
                 "sent to this sender": "yes" if example.get("sent_to_sender") else "no",
             })
-        emails.append({
+        summary = {
             "time": record.get("time", ""),
             "email id": record.get("message_id", ""),
             "switch": switch,
@@ -124,7 +124,10 @@ def load_reply_trace(path=REPLY_TRACE_PATH, limit=20):
             "threshold count": sum(bool(ex.get("above_threshold")) for ex in examples if isinstance(ex, dict)),
             "sent count": sum(bool(ex.get("sent_to_sender")) for ex in examples if isinstance(ex, dict)),
             "examples": rows,
-        })
+        }
+        if "reply_path" in record:
+            summary["reply_path"] = record.get("reply_path")
+        emails.append(summary)
     # A message can have only one trace record; reverse file order is newest first.
     return list(reversed(emails))[:max(0, limit)]
 
@@ -347,8 +350,9 @@ def main():
         if reply_trace:
             for email in reply_trace:
                 timestamp = format_local_timestamp(email["time"]) if email["time"] else ""
+                reply_path = f" · path {email['reply_path']}" if email.get("reply_path") else ""
                 st.write(
-                    f"{timestamp} · switch {email['switch']} · {email['examples used']} used · "
+                    f"{timestamp} · switch {email['switch']}{reply_path} · {email['examples used']} used · "
                     f"{email['threshold count']} {email['threshold label']} · "
                     f"{email['sent count']} to sender"
                 )

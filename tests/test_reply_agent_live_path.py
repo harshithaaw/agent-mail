@@ -30,8 +30,9 @@ def _fake_agent_module(fn):
     return types.SimpleNamespace(run_reply_agent=fn)
 
 
-def test_switch_off_uses_thin_path_without_importing_agent(monkeypatch):
-    monkeypatch.delenv("AGENTMAIL_REPLY_AGENT", raising=False)
+@pytest.mark.parametrize("switch_value", ["0", "false", "OFF"])
+def test_explicit_switch_off_uses_thin_path_without_importing_agent(monkeypatch, switch_value):
+    monkeypatch.setenv("AGENTMAIL_REPLY_AGENT", switch_value)
     rows = _thin(monkeypatch)
     original_import = builtins.__import__
 
@@ -42,12 +43,12 @@ def test_switch_off_uses_thin_path_without_importing_agent(monkeypatch):
 
     monkeypatch.setattr(builtins, "__import__", guarded_import)
     assert reply_pipeline.reply_to_email(EMAIL, UNDERSTANDING, object(), lambda _: [], generate=lambda *_: "Thin draft") == {
-        "draft": "Thin draft", "retrieved": rows, "category": "Career"
+        "draft": "Thin draft", "retrieved": rows, "category": "Career", "reply_path": "thin"
     }
 
 
-def test_switch_on_passes_injected_store_and_returns_live_shape(monkeypatch):
-    monkeypatch.setenv("AGENTMAIL_REPLY_AGENT", "1")
+def test_unset_switch_uses_agent_with_exact_thin_query(monkeypatch):
+    monkeypatch.delenv("AGENTMAIL_REPLY_AGENT", raising=False)
     collection, embed = object(), lambda text: [1.0]
     calls = []
 
@@ -58,10 +59,12 @@ def test_switch_on_passes_injected_store_and_returns_live_shape(monkeypatch):
     monkeypatch.setitem(sys.modules, "agents.reply.agent", _fake_agent_module(run))
     result = reply_pipeline.reply_to_email(EMAIL, UNDERSTANDING, collection, embed)
     args, kwargs = calls[0]
-    assert "Sender: A Sender <sender@example.test>" in args[0]
+    assert args[0] == "Subject: Question\n\nCould we meet?"
+    assert "Sender:" not in args[0]
     assert args[1]["sender_name"] == "A Sender"
+    assert args[1]["sender_email"] == "sender@example.test"
     assert kwargs == {"sender_email": "sender@example.test", "thread_id": "thread-1", "collection": collection, "embed": embed}
-    assert result == {"draft": "Agent draft", "retrieved": [{"id": "agent-1"}], "category": "Career", "validation": {"sufficient": True}}
+    assert result == {"draft": "Agent draft", "retrieved": [{"id": "agent-1"}], "category": "Career", "validation": {"sufficient": True}, "reply_path": "agent"}
 
 
 @pytest.mark.parametrize("agent_result", [RuntimeError("broken"), {"draft": "", "retrieved_examples": []}])
@@ -76,7 +79,7 @@ def test_agent_failure_or_empty_draft_falls_back(monkeypatch, agent_result):
 
     monkeypatch.setitem(sys.modules, "agents.reply.agent", _fake_agent_module(run))
     result = reply_pipeline.reply_to_email(EMAIL, UNDERSTANDING, object(), lambda _: [], generate=lambda *_: "Thin draft")
-    assert result == {"draft": "Thin draft", "retrieved": rows, "category": "Career"}
+    assert result == {"draft": "Thin draft", "retrieved": rows, "category": "Career", "reply_path": "thin_fallback"}
 
 
 def test_run_reply_agent_old_call_without_injected_store_still_works(monkeypatch):
@@ -103,7 +106,24 @@ def test_agent_result_can_be_written_to_trace(tmp_path):
         "draft": "Agent draft",
         "retrieved": [{"id": "sent-1", "document": "Subject\nBody", "metadata": {}, "distance": 0.2}],
         "validation": {"sufficient": True, "usable_examples": []},
+        "reply_path": "agent",
     }, path=path)
     row = json.loads(path.read_text(encoding="utf-8"))
     assert row["examples"][0]["id"] == "sent-1"
     assert row["validation"]["sufficient"] is True
+    assert row["reply_path"] == "agent"
+
+
+def test_dashboard_loads_trace_with_and_without_reply_path(tmp_path):
+    from dashboard import load_reply_trace
+
+    path = tmp_path / "trace.jsonl"
+    path.write_text(
+        json.dumps({"message_id": "older", "switch": "off", "examples": []}) + "\n"
+        + json.dumps({"message_id": "newer", "switch": "off", "reply_path": "thin", "examples": []}) + "\n",
+        encoding="utf-8",
+    )
+    rows = load_reply_trace(path)
+    assert [row["email id"] for row in rows] == ["newer", "older"]
+    assert rows[0]["reply_path"] == "thin"
+    assert "reply_path" not in rows[1]

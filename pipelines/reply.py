@@ -1,6 +1,7 @@
 """Pipeline A Reply Agent: category-filtered semantic retrieval + grounded draft."""
 import logging
 import os
+from email.utils import getaddresses
 from agents.understanding.categories import CATEGORIES
 
 log = logging.getLogger(__name__)
@@ -32,13 +33,12 @@ def generate_grounded_draft(email, examples, generate=None):
 
 def reply_to_email(email, understanding, collection, embed, generate=None, k=3):
     query_text = f"Subject: {email.get('subject', '')}\n\n{email.get('body', '')}"
-    if os.getenv("AGENTMAIL_REPLY_AGENT") == "1":
+    switch_value = os.getenv("AGENTMAIL_REPLY_AGENT", "").strip().lower()
+    agent_enabled = switch_value not in {"0", "false", "off"}
+    reply_path = "thin" if not agent_enabled else "thin_fallback"
+    if agent_enabled:
         sender_name = email.get("sender_name", "")
         sender_email = email.get("sender_email", "")
-        email_text = (
-            f"Sender: {sender_name} <{sender_email}>\n"
-            f"Subject: {email.get('subject', '')}\n\n{email.get('body', '')}"
-        )
         agent_output = {
             **understanding,
             "sender_name": sender_name,
@@ -50,7 +50,7 @@ def reply_to_email(email, understanding, collection, embed, generate=None, k=3):
             from agents.reply.agent import run_reply_agent
 
             result = run_reply_agent(
-                email_text,
+                query_text,
                 agent_output,
                 sender_email=sender_email,
                 thread_id=email.get("thread_id"),
@@ -58,11 +58,13 @@ def reply_to_email(email, understanding, collection, embed, generate=None, k=3):
                 embed=embed,
             )
             if result and result.get("draft"):
+                reply_path = "agent"
                 log.info("reply generation path=agent")
                 reply = {
                     "draft": result["draft"],
                     "retrieved": result.get("retrieved_examples", []),
                     "category": understanding["category"],
+                    "reply_path": reply_path,
                 }
                 if result.get("validation") is not None:
                     reply["validation"] = result["validation"]
@@ -79,15 +81,17 @@ def reply_to_email(email, understanding, collection, embed, generate=None, k=3):
         thread_id = email.get("thread_id")
         if sender or thread_id:
             try:
-                from agents.reply.agent import _normalize_address
                 from rag.retrieve import retrieve_similar
+
+                addresses = getaddresses([sender or ""])
+                person_addr = addresses[0][1].strip().lower() if addresses else ""
 
                 examples = retrieve_similar(
                     query_text,
                     k=k,
                     source_filter=["gmail_sent"],
                     category=understanding["category"],
-                    person_addr=_normalize_address(sender) or None,
+                    person_addr=person_addr or None,
                     thread_id=thread_id or None,
                     collection=collection,
                     embed=embed,
@@ -117,7 +121,7 @@ def reply_to_email(email, understanding, collection, embed, generate=None, k=3):
     )
     # Boundary evidence is available to callers in result, and logged by app.
     draft = generate_grounded_draft(email, draft_examples, generate) if generate else _generate_with_context(email_text, {**understanding, "sender_name": sender_name, "sender_email": email.get("sender_email", "")}, draft_examples)
-    return {"draft": draft, "retrieved": examples, "category": understanding["category"]}
+    return {"draft": draft, "retrieved": examples, "category": understanding["category"], "reply_path": reply_path}
 
 
 def _generate_with_context(email_text, understanding, examples):

@@ -59,6 +59,8 @@ def write_reply_trace(email, reply_result, path=DEFAULT_TRACE_PATH):
             "validation": _safe_validation((reply_result or {}).get("validation")),
             "examples": [],
         }
+        if "reply_path" in (reply_result or {}):
+            trace["reply_path"] = _without_addresses((reply_result or {}).get("reply_path"))
         for rank, example in enumerate(examples or [], start=1):
             example = example if isinstance(example, dict) else {}
             metadata = example.get("metadata") or {}
